@@ -1,0 +1,184 @@
+<div class="container-fluid col-12" style="margin: auto">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title d-inline-block">
+            {{ "Basic Information" | translate }}
+          </h4>
+          <hr />
+          <div class="outer-repeater">
+            <div data-repeater-list="outer-group" class="outer">
+              <div data-repeater-item class="outer row">
+                <form [formGroup]="firstFormGroup" class="row">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text bg-lightgray">{{
+                          "Advance Requisition No" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-6">
+                        <input
+                          readonly="true"
+                          (click)="viewAdvance()"
+                          style="
+                            cursor: pointer;
+                            text-decoration: underline;
+                            color: blue;
+                            font-weight: bold;
+                          "
+                          type="text"
+                          class="form-control"
+                          formControlName="AdvanceRequisitionNo"
+                        />
+                      </div>
+                    </div>
+                    <div *ngIf="isPettyCashSelected" class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text bg-lightgray">{{
+                          "Petty Cash Amount" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-6">
+                        <input
+                          readonly
+                          (keypress)="numberOnly($event)"
+                          type="text"
+                          class="form-control"
+                          formControlName="PettyCashAmount"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-4">
+                        <label class="input-group-text bg-lightgray"
+                          >{{ supervisorLevelName | translate
+                          }}<span class="required-sign">*</span></label
+                        >
+                      </div>
+                      <div class="col-8">
+                        <input
+                          type="text"
+                          readonly
+                          class="form-control"
+                          formControlName="SupervisorName"
+                        />
+                      </div>
+                    </div>
+                    <div *ngIf="isPettyCashSelected" class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text bg-lightgray">{{
+                          "Actual Cost" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-6">
+                        <input
+                          readonly
+                          (keypress)="numberOnly($event)"
+                          type="text"
+                          class="form-control"
+                          formControlName="ActualCost"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-lg-12 table-responsive">
+                        <table class="table tbl table-bordered mb-0">
+                          <thead>
+                            <tr class="tableheader">
+                              <th class="text-left">FileName</th>
+                              <th class="text-right">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let file of data?.RefundFiles">
+                              <td>{{ file?.FileName }}</td>
+                              <td style="width: 5px" class="text-right">
+                                <a
+                                  style="padding: 20px; cursor: pointer"
+                                  tooltip="Download file"
+                                  (click)="
+                                    downloadFile(file?.Id, file?.FileName)
+                                  "
+                                >
+                                  <i class="fa fa-download"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-3">
+                        <label class="input-group-text bg-lightgray"
+                          >{{ "Justification" | translate
+                          }}<span class="required-sign">*</span></label
+                        >
+                      </div>
+                      <div class="col-9">
+                        <textarea
+                          name="textarea"
+                          readonly
+                          class="form-control"
+                          formControlName="Justification"
+                          maxlength="100"
+                          name="Justification"
+                          rows="3"
+                          cols="18"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-advance-settlement-budget-details
+    [itemList]="data?.Items"
+    [canEdit]="false"
+    [totalAmount]="totalAmount"
+    [totalCost]="totalCost"
+    [totalDue]="totalDue"
+    [totalRefund]="totalRefund"
+    [isDue]="isDue"
+    [isRefund]="isRefund"
+  ></app-advance-settlement-budget-details>
+  <div *ngIf="canViewFinanceGroup" class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-2">
+              <label class="input-group-text bg-white">Voucher No:</label>
+            </div>
+            <input disabled value="{{ VoucherNo }}" class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-approval-flow-details
+    [canView]="true"
+    [approverList]="data?.RunningApproverMatrixViewModel"
+    [approvedCount]="approvedStatusCount"
+    [pendingCount]="pendingStatusCount"
+    [dueCount]="dueStatusCount"
+  ></app-approval-flow-details>
+  <app-approval-history
+    [canView]="data?.AdvanceHistoryList?.length > 0"
+    [historyList]="data?.AdvanceHistoryList"
+  ></app-approval-history>
+  <div class="clear mb-2"></div>
+  <div class="clear mb-2"></div>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

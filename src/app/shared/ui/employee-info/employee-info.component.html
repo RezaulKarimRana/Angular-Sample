@@ -1,0 +1,59 @@
+<div class="card h-40" style="width: 92%">
+  <div class="card-body" style="padding: 1px;text-align: center;">
+    <div data-repeater-list="outer-group" class="outer">
+      <label class="accordionEmployeeInfo" style="font-weight: 600; text-transform: uppercase;">{{'Employee Information'|translate}}</label>
+      <div class="panelEmployeeInfo">
+        <div data-repeater-item class="outer">
+          <div class="input-group mb-1 col-12">
+            <div class="input-group-prepend col-5">
+              <label class="input-group-text bg-white">{{'HR ID'|translate}}</label>
+            </div>
+            <div class="col-7 d-flex">
+              <input disabled type="text" class="form-control" value="{{portalUserViewModel.HrId}}">
+            </div>
+          </div>
+          <div class="input-group mb-1 col-12">
+            <div class="input-group-prepend col-5">
+              <label class="input-group-text bg-white">{{'Name'|translate}}</label>
+            </div>
+            <div class="col-7 d-flex">
+              <input disabled type="text" class="form-control" value="{{portalUserViewModel.FullName}}">
+            </div>
+          </div>
+          <div class="input-group mb-1 col-12">
+            <div class="input-group-prepend col-5">
+              <label class="input-group-text bg-white">{{'Company'|translate}}</label>
+            </div>
+            <div class="col-7 d-flex">
+              <input disabled type="text" class="form-control" value="{{portalUserViewModel.EmpolyeeTypeName}}">
+            </div>
+          </div>
+          <div class="input-group mb-1 col-12">
+            <div class="input-group-prepend col-5">
+              <label class="input-group-text bg-white">{{'Department'|translate}}</label>
+            </div>
+            <div class="col-7 d-flex">
+              <input disabled type="text" class="form-control" value="{{portalUserViewModel.DepartmentName}}">
+            </div>
+          </div>
+          <div class="input-group mb-1 col-12">
+            <div class="input-group-prepend col-5">
+              <label class="input-group-text bg-white">{{'Designation'|translate}}</label>
+            </div>
+            <div class="col-7 d-flex">
+              <input disabled type="text" class="form-control" value="{{portalUserViewModel.DesignationName}}">
+            </div>
+          </div>
+          <div class="input-group mb-1 col-12">
+            <div class="input-group-prepend col-5">
+              <label class="input-group-text bg-white">{{'Office'|translate}}</label>
+            </div>
+            <div class="col-7 d-flex">
+              <input disabled type="text" class="form-control" value="{{portalUserViewModel.OfficeLocationName}}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

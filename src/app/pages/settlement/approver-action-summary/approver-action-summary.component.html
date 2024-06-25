@@ -1,0 +1,29 @@
+<div style="margin-top: 5px;margin-bottom: 5px;">
+    <button type="button"
+        class="gridRowZeroSpacing gridDetailbtn-action btn btn-info btn-label btn-sm waves-light" (click)="onDetails()"><i
+            class="bx bx-detail label-icon"></i> Details</button>
+    <div class="d-inline" *ngIf="!hasNoAction">
+        <button *ngIf="is_Approver_Pending" type="button"
+            class="btn btn-success btn-sm  btn-label waves-light ms-1" (click)="onCheck()"><i
+                class="bx bx-edit label-icon"></i> Check</button>
+        <!-- <br>
+        <button  type="button" *ngIf="canFinanceCheckSentToHR"
+            class="gridEditbtn-action btn btn-warning btn-sm btn-label waves-light"
+            (click)="onSenttoHR()"><i class="bx bx-send label-icon"></i> Sent to HR</button>
+
+       <button  type="button" *ngIf="canFinanceCompleteSentToHR"
+            class="gridEditbtn-action btn btn-warning btn-sm btn-label waves-light"
+            (click)="onSentFinanceCompletetoVerifyHR()"><i class="bx bx-send label-icon"></i> Sent to Verify HR</button>
+            <br>
+        <button *ngIf="canSendToInternalControl" type="button"
+            class="gridEditbtn-action btn btn-warning btn-sm btn-label waves-light ms-1"
+            (click)="onSenttoInternal()"><i class="bx bx-send label-icon"></i> Sent to Internal</button> -->
+    </div>
+    <button *ngIf="canEdit" type="button"
+        class="gridRowZeroSpacing gridEditbtn-action btn btn-success btn-sm ms-1 btn-label waves-light"
+        (click)="onEdit()"><i class="bx bx-edit label-icon"></i> Edit</button>
+    <button type="button" style="padding-right: 15px"class="gridRowZeroSpacing gridEditbtn-action btn btn-success btn-sm ms-1 btn-label waves-light"
+        (click)="onExcelDownload()"><i class="bx bx-download label-icon"></i> Download</button>
+    <button type="button" style="padding-right: 15px"class="gridRowZeroSpacing gridEditbtn-action btn btn-danger btn-sm ms-1 btn-label waves-light"
+    (click)="onDownloadPDF()"><i class="bx bxs-file-pdf label-icon"></i> Pdf</button>
+</div>

@@ -1,0 +1,19 @@
+<span class="ctr-error-message">
+    <ng-container *ngIf="isNotValid">
+        <ng-container *ngIf="formControl.hasError('required')">{{displayName}} is <b>required</b></ng-container>
+        <ng-container *ngIf="formControl.hasError('email')">Email is not valid</ng-container>
+        <ng-container *ngIf="formControl.hasError('maxlength')">{{displayName}} is too long (maximum
+            {{formControl.errors?.maxlength?.requiredLength}} characters allowed).</ng-container>
+        <ng-container *ngIf="formControl.hasError('minlength')">{{displayName}} min length is
+            {{formControl.errors?.minlength?.actualLength}} / {{formControl.errors?.minlength?.requiredLength}}
+        </ng-container>
+        <ng-container *ngIf="formControl.hasError('min')">Min value is {{formControl.errors?.min?.min}}, actual value is
+            {{formControl.errors?.min?.actual}}</ng-container>
+        <ng-container *ngIf="formControl.hasError('max')">Max value is {{formControl.errors?.max?.max}}, actual value is
+            {{formControl.errors?.max?.actual}}</ng-container>
+        <ng-container *ngIf="formControl.hasError('pattern')">Invalid {{displayName}}</ng-container>
+        <ng-container *ngIf="formControl.hasError('passwordMismatch')">Passwords do not match.</ng-container>
+        <ng-container *ngIf="formControl.hasError('selectedClientInvalid')">The selected Client is not valid
+        </ng-container>
+    </ng-container>
+</span>

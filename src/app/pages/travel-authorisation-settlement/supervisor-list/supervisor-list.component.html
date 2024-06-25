@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">{{'Pending List'|translate}}</h4>
+      <div class="row header">
+          <form [formGroup]="firstFormGroup" class="col-md-12" style="margin-top:5px">
+            <div class="col-md-12 d-flex">
+              <div class="col-md-4 col-marginRight">
+                <div class="input-group mb-1">
+                    <label class="col-sm-4 input-group-text bg-white">{{'Status'|translate}}</label>
+                  <ng-select (change)="_fetchData()" style="width: 60%" [items]="initModel?.StatusList" bindLabel="Name" bindValue="Id" name="StatusId" formControlName="StatusId"> </ng-select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row content-table">
+              <ag-grid-angular [enableCellTextSelection]="true"
+                style="width: 100%; height: 600px;"
+                [getRowHeight]="400"
+                class="ag-theme-alpine" [gridOptions]="gridOptions"
+                [columnDefs]="gridOptions.columnDefs"
+                [rowData]="listData"
+                (modelUpdated)="onModelUpdated()"
+                (gridReady)="OnGridReady($event)">
+              </ag-grid-angular>
+        </div>
+    </div>
+  </div>
+  </div>

@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{labelListTitle|translate}}</h4>
+  <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="col-lg-12" [formGroup]="officeLocationForm" autocomplete="off">
+      <div class="row mb-2">
+        <label class="col-form-label col-lg-4">{{'Name'|translate}}<span class="required-sign">*</span></label>
+        <div class="col-lg-8 d-flex">
+          <input placeholder="Enter Name" formControlName="Name" oninput="this.value = this.value.toUpperCase()" class="form-control" />
+          <error-handler controlName="Name" displayName="{{'Name'|translate}}"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <label class="col-form-label col-lg-4">{{'District'|translate}}<span class="required-sign">*</span></label>
+        <div class="col-lg-8">
+          <ng-select [items]="districts" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose District'|translate}}" name="DistrictId" formControlName="DistrictId">
+            <ng-template ng-option-tmp let-item="item">
+              {{item.Name | translate}}
+            </ng-template>
+          </ng-select>
+          <error-handler controlName="DistrictId" displayName="{{'District'|translate}}"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <label class="col-form-label col-lg-4">{{'Status'|translate}}<span class="required-sign">*</span></label>
+        <div class="col-lg-6 d-flex">
+          <app-slide formControlName="IsActive" ></app-slide>
+        </div>
+      </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="onSubmit()" type="submit" class="btn btn-primary">{{'Submit'|translate}}</button>
+</div>

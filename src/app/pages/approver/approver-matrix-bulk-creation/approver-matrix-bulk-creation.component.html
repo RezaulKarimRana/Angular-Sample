@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row">   
+    <div class="col card">
+      <div class="card-body">
+        <h4 class="card-title mb-2 d-inline-block">Create Bulk Approver Matrix</h4>
+        <hr>
+        <form class="row" [formGroup]="approverMatrixForm">
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Approver Matrix Type</label>
+                <div class="col-lg-6">
+                  <select class="form-control" name="ApproverMatrixType" formControlName="ApproverMatrixType" type="text">
+                    <option value='' selected disabled hidden>Choose Approver Matrix Type</option>
+                    <option *ngFor="let item of approverMatrixModel?.ApproverMatrixFor" [ngValue]="item.Name">{{ item.Name }}
+                    </option>
+                  </select>
+                  <error-handler controlName="ApproverMatrixType" displayName="Approver Matrix Type"></error-handler>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-4">Approver Matrix Demo</label>
+                <div class="col-lg-6" style="padding-top: calc(0.47rem + 1px);">
+                  <a href="/assets/excel/ApproverMatrixDemo.xlsx" target="_self">Click Here To Download Approver Matrix Demo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="outer-repeater">
+          <div data-repeater-list="outer-group" class="outer">
+            <div data-repeater-item class="outer row">
+              <div class="col-md-12 d-flex mb-2">
+                <div class="col-md-8 form-group">
+                  <input type="file" class="form-control" (change)="addfile($event)" placeholder="Upload file"
+                    accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </div>
+                <div class="col-md-2 form-group">
+                  <input style="float: right;" type="button" class="btn btn-success inner" value="CREATE"
+                    (click)="createMatrix()" />
+                </div>
+              </div>
+              <app-loader></app-loader>
+              <div class="table-responsive" style="min-height: 100px;">
+                <table class="table table-bordered table-striped table-nowrap mb-0">
+                  <thead>
+                    <tr class="tableHeader">
+                      <th scope="col-5" class="table-header-color text-align-center">Name</th>
+                      <th scope="col-5" class="table-header-color text-align-center">Level</th>
+                      <th scope="col-5" class="table-header-color text-align-center">WorkFlow</th>
+                      <th scope="col-5" class="table-header-color text-align-center">User Name</th>
+                      <th scope="col-5" class="table-header-color text-align-center">{{'Email'|translate}}</th>
+                      <th scope="col-5" class="table-header-color text-align-center">{{'Department'|translate}}</th>
+                      <th scope="col-5" class="table-header-color text-align-center">Approver Group</th>
+                      <th scope="col-5" class="table-header-color text-align-left">Approver Sub Group</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of approverMatrixBulkModel">
+                      <td class="text-align-center">{{item.Name}}</td>
+                      <td class="text-align-center">{{item.Level}}</td>
+                      <td class="text-align-center">{{item.WorkFlowName}}</td>
+                      <td class="text-align-center">{{item.UserName}}</td>
+                      <td class="text-align-center">{{item.Email}}</td>
+                      <td class="text-align-center">{{item.DepartmentName}}</td>
+                      <td class="text-align-center">{{item.ApproverGroupName}}</td>
+                      <td class="text-align-center">{{item.ApproverSubGroupName}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

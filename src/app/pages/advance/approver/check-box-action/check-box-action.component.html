@@ -1,0 +1,3 @@
+<div *ngIf="canSendToInternalControl" class="form-check">
+    <input [(ngModel)]="isCheckedForBulkProcessing" class="form-check-input" style="cursor: pointer;" (click)="onCheck(id,$event.target.checked)" type="checkbox">
+</div>

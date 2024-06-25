@@ -1,0 +1,719 @@
+<div class="container-fluid col-12" style="margin: auto">
+  <div class="col-lg-12">
+    <div class="row">
+      <div
+        style="padding-right: 5px; padding-left: 11px"
+        [ngClass]="{ 'col-lg-9': !isCollapsed, 'col-lg-12': isCollapsed }"
+      >
+        <div class="card">
+          <div class="card-body row">
+            <h4 class="card-title d-inline-block">
+              {{ pageTitle | translate }}
+            </h4>
+            <hr />
+            <form [formGroup]="basicForm" class="row">
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray">{{
+                      "Request No" | translate
+                    }}</label>
+                  </div>
+                  <div class="col-6">
+                    <input
+                      readonly
+                      (keypress)="numberOnly($event)"
+                      type="text"
+                      class="form-control"
+                      formControlName="RequestNo"
+                    />
+                  </div>
+                </div>
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray">{{
+                      "Total Advance" | translate
+                    }}</label>
+                  </div>
+                  <div class="col-6">
+                    <input
+                      readonly
+                      (keypress)="numberOnly($event)"
+                      type="text"
+                      class="form-control"
+                      formControlName="TotalAmount"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray">{{
+                      "TA Ref No" | translate
+                    }}</label>
+                  </div>
+                  <div class="col-6">
+                    <input
+                      readonly="true"
+                      (click)="viewTA()"
+                      style="
+                        cursor: pointer;
+                        text-decoration: underline;
+                        color: blue;
+                        font-weight: bold;
+                      "
+                      type="text"
+                      class="form-control"
+                      formControlName="TARefNo"
+                    />
+                  </div>
+                </div>
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray">{{
+                      "Total Cost" | translate
+                    }}</label>
+                  </div>
+                  <div class="col-6">
+                    <input
+                      readonly
+                      (keypress)="numberOnly($event)"
+                      type="text"
+                      class="form-control"
+                      formControlName="TotalCost"
+                    />
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div
+                    class="col-lg-12"
+                    *ngIf="aModel?.UploadedFiles?.length > 0"
+                  >
+                    <table class="table tbl table-bordered mb-0">
+                      <thead>
+                        <tr class="tableheader">
+                          <th class="text-left">Name</th>
+                          <th class="text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let invFile of aModel?.UploadedFiles;
+                            let i = index
+                          "
+                        >
+                          <td>{{ invFile?.FileName }}</td>
+                          <td style="width: 10px" class="text-right">
+                            <a
+                              style="margin-left: 10px; cursor: pointer"
+                              tooltip="Download"
+                              (click)="
+                                downloadFile(invFile?.Id, invFile?.FileName)
+                              "
+                            >
+                              <i class="fa fa-download"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-3"
+        style="padding-left: 1px; padding-right: 2px"
+        *ngIf="!isCollapsed"
+      >
+        <app-requester-employee-info
+          [profilePic]="profilePicAsByteArrayAsBase64"
+          [portalUserViewModel]="aModel?.RequesterUser"
+        ></app-requester-employee-info>
+        <form
+          style="width: 100%"
+          [formGroup]="bankFormGroup"
+          [hidden]="!CanViewBankInfo"
+        >
+          <div class="row">
+            <app-bank-account
+              #bankAccountComponent
+              formControlName="UserBankDetails"
+              (onInitalize)="onInitalizeBankAccount($event)"
+            ></app-bank-account>
+          </div>
+        </form>
+      </div>
+      <div style="padding-right: 5px; padding-left: 10px" class="col-lg-12">
+        <form [formGroup]="basicForm">
+          <div class="card">
+            <div class="card-body row">
+              <h4 class="card-title d-inline-block">
+                {{ "Settlement Details" | translate }}
+              </h4>
+              <hr />
+              <div class="pt-2 table-responsive">
+                <table
+                  class="table table-bordered align-middle table-nowrap mb-0"
+                  [ngStyle]="
+                    innerWidth < 1000 ? { width: '1200px' } : { width: '100%' }
+                  "
+                >
+                  <thead class="table-light">
+                    <tr>
+                      <th class="align-middle col-3">
+                        {{ "Location Details" | translate }}
+                      </th>
+                      <th class="align-middle col-4">
+                        {{ "Task Details" | translate }}
+                      </th>
+                      <th class="align-middle col-3">
+                        {{ "Allowance Details" | translate }}
+                      </th>
+                      <th class="align-middle col-2">
+                        {{ "Action" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container
+                      formArrayName="Items"
+                      *ngFor="let item of taItems.controls; let i = index"
+                    >
+                      <tr
+                        [formGroupName]="i"
+                        *ngIf="
+                          taItems.controls[i].get('IsActive')?.value == true
+                        "
+                      >
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Working District" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <ng-select
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="WorkingDistrictId"
+                                formControlName="WorkingDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray">{{
+                                "District Type" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6 d-flex">
+                              <input
+                                class="form-control"
+                                formControlName="WorkingDistrictType"
+                                type="text"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Location From" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <ng-select
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="LocationFromDistrictId"
+                                formControlName="LocationFromDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Location To" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <ng-select
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="LocationToDistrictId"
+                                formControlName="LocationToDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Task Type" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8">
+                              <ng-select
+                                [items]="initModel?.TaskTypeList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeId"
+                                formControlName="TaskTypeId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Task Detail" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8">
+                              <ng-select
+                                [items]="initModel?.TaskTypeDetailsList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeDetailsId"
+                                formControlName="TaskTypeDetailsId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Allowance/day" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="AllowancecPerDay"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            *ngIf="
+                              taItems.controls[i].get('FileName')?.value != ''
+                            "
+                            class="input-group mb-1"
+                          >
+                            <div class="input-group-prepend col-12">
+                              <label
+                                style="
+                                  margin-top: 7px;
+                                  margin-left: 10px;
+                                  color: blue;
+                                  text-decoration: underline;
+                                  cursor: pointer;
+                                "
+                                (click)="
+                                  downloadTASettlementFile(
+                                    taItems.controls[i].get('Id')?.value,
+                                    taItems.controls[i].get('FileName')?.value
+                                  )
+                                "
+                                >{{
+                                  taItems.controls[i].get("FileName")?.value
+                                }}</label
+                              >
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Start Date" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                min="todaysDate"
+                                class="form-control"
+                                type="datetime-local"
+                                name="StartDate"
+                                formControlName="StartDate"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "End Date" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                min="todaysDate"
+                                class="form-control"
+                                type="datetime-local"
+                                name="EndDate"
+                                formControlName="EndDate"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "No Of Day" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="NoOfDays"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Total Cost" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="TotalCost"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td align="center">
+                          <button
+                            style="margin-top: 0.5rem"
+                            type="button"
+                            class="btn btn-info btn-sm"
+                            (click)="allowanceDetails(i)"
+                          >
+                            <i
+                              class="mdi mdi-eye-check label-icon font-size-15"
+                            ></i>
+                            Allowance Details
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <tr>
+                      <td colspan="2" style="background-color: #fff"></td>
+                      <td>
+                        <div class="input-group mb-1">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Total Advance" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <label class="input-group-text bg-lightgray">{{
+                              totalAllowance
+                            }}</label>
+                          </div>
+                        </div>
+                        <div class="input-group mb-1">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Total Settlement" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <label class="input-group-text bg-lightgray">{{
+                              totalSettlement
+                            }}</label>
+                          </div>
+                        </div>
+                        <div class="input-group mb-1" *ngIf="isDue">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Due Amount" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <label class="input-group-text bg-lightgray">{{
+                              totalDueStr
+                            }}</label>
+                          </div>
+                        </div>
+                        <div class="input-group mb-1" *ngIf="isDue">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Deposited Due" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <input
+                              class="form-control"
+                              type="number"
+                              [readOnly]="!isFinanceCheck"
+                              formControlName="DepositedDue"
+                              (change)="balanceCalculation()"
+                            />
+                          </div>
+                        </div>
+                        <div class="input-group mb-1" *ngIf="isRefund">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Refund Amount" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <label class="input-group-text bg-lightgray">{{
+                              totalRefundStr
+                            }}</label>
+                          </div>
+                        </div>
+                        <div class="input-group mb-1" *ngIf="isRefund">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Deposited Refund" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <input
+                              class="form-control"
+                              type="number"
+                              [readOnly]="!isFinanceCheck"
+                              formControlName="DepositedRefund"
+                            />
+                          </div>
+                        </div>
+                        <div class="input-group mb-1" *ngIf="isRefund || isDue">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Balance" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <input
+                              class="form-control"
+                              type="number"
+                              formControlName="Balance"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-approval-flow-details
+        [canView]="true"
+        [approverList]="aModel?.RunningApproverMatrixViewModel"
+        [approvedCount]="0"
+        [pendingCount]="0"
+        [dueCount]="0"
+      ></app-approval-flow-details>
+    </div>
+    <app-approval-history
+      [canView]="
+        aModel?.TASettlementRunningApproverMatrixHistoryViewModel?.length > 0
+      "
+      [historyList]="aModel?.TASettlementRunningApproverMatrixHistoryViewModel"
+    >
+    </app-approval-history>
+  </div>
+  <div class="clear mb-2"></div>
+  <div *ngIf="aModel?.Is_Approver" class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Approver's Entry</h4>
+        <hr />
+        <form
+          *ngIf="aModel?.Is_Supervisor_Pending"
+          [formGroup]="recommenderFormGroup"
+        >
+          <div class="col-lg-12">
+            <div class="row">
+              <div
+                class="row mb-3"
+                *ngIf="aModel?.AcknowledgerUsers?.length > 0"
+              >
+                <label class="col-form-label col-lg-2">{{
+                  "Acknowledger" | translate
+                }}</label>
+                <div class="col-lg-4">
+                  <ng-select
+                    [items]="aModel?.AcknowledgerUsers"
+                    bindLabel="Name"
+                    bindValue="Id"
+                    placeholder="{{ 'Please Select' | translate }}"
+                    name="AcknowledgerId"
+                    formControlName="AcknowledgerId"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row mb-3" *ngIf="aModel?.VerifierUsers?.length > 0">
+                <label class="col-form-label col-lg-2">{{
+                  "Verifier" | translate
+                }}</label>
+                <div class="col-lg-4">
+                  <ng-select
+                    [items]="aModel?.VerifierUsers"
+                    bindLabel="Name"
+                    bindValue="Id"
+                    placeholder="{{ 'Please Select' | translate }}"
+                    name="VerifierId"
+                    formControlName="VerifierId"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <div
+                class="row mb-3"
+                *ngIf="aModel?.RecommenderUsers?.length > 0"
+              >
+                <label class="col-form-label col-lg-2"
+                  >{{ "Recommender" | translate
+                  }}<span class="required-sign">*</span></label
+                >
+                <div class="col-lg-4">
+                  <ng-select
+                    [items]="aModel?.RecommenderUsers"
+                    bindLabel="Name"
+                    bindValue="Id"
+                    placeholder="{{ 'Please Select' | translate }}"
+                    name="RecommenderId"
+                    formControlName="RecommenderId"
+                  >
+                  </ng-select>
+                  <error-handler
+                    controlName="RecommenderId"
+                    displayName="Recommender"
+                  ></error-handler>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <ng-template ngbNavContent>
+              <form [formGroup]="formGroup">
+                <div
+                  *ngIf="(isFinanceCheck || isFinanceComplete) && isDue"
+                  class="col-lg-12"
+                >
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text bg-white"
+                        >Voucher No</label
+                      >
+                    </div>
+                    <input
+                      *ngIf="isFinanceCheck"
+                      class="form-control"
+                      formControlName="VoucherNo"
+                      name="VoucherNo"
+                      type="text"
+                    />
+                    <input
+                      *ngIf="isFinanceComplete"
+                      disabled
+                      class="form-control"
+                      formControlName="VoucherNo"
+                      name="VoucherNo"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text bg-white">{{
+                        "Remarks" | translate
+                      }}</label>
+                    </div>
+                    <textarea
+                      name="textarea"
+                      class="form-control"
+                      formControlName="ApproverRemarks"
+                      name="ApproverRemarks"
+                      rows="4"
+                      cols="18"
+                      maxlength="100"
+                    ></textarea>
+                  </div>
+                  <div class="input-group mb-3">
+                    <label
+                      >{{ "Characters Remaining" | translate }}:
+                      {{ approverRemarksFC.value.length }} /{{ 100 }}</label
+                    >
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="customNav"></div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row justify-content-end">
+        <div class="mb-2">
+          <button
+            type="submit"
+            class="btn btn-primary btn-md btn-label waves-light float-end ms-1"
+            (click)="onVerifyAndSubmit()"
+          >
+            <i class="bx bx-save label-icon"></i> Verify & Submit
+          </button>
+          <button
+            type="submit"
+            class="btn btn-danger btn-md btn-label waves-light ms-1 float-end"
+            (click)="onReturn()"
+          >
+            <i class="bx bx-revision label-icon"></i> Return
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

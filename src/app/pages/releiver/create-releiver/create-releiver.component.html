@@ -1,0 +1,71 @@
+<div class="container-fluid min-vh-100">
+    <div class="col-lg-12">
+      <div class="row">
+        <div style="padding-right: 5px; padding-left: 10px;" class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title d-inline-block">{{pageTitle|translate}} {{'Reliever/Delegation'|translate}}</h4>
+              <hr>
+              <div class="outer-repeater">
+                <div data-repeater-list="outer-group" class="outer">
+                  <div data-repeater-item class="outer row">
+                    <form [formGroup]="formGroup" class="row">
+                      <div class="col-lg-7">
+                        <div class="row mb-1">
+                          <label class="col-form-label col-lg-4">{{'Relieve From'|translate}}<span class="required-sign">*</span></label>
+                          <div class="col-lg-8 d-flex">
+                            <input class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true" name="ReleiveFromDate"
+                              formControlName="ReleiveFromDate" [minDate]="todaysDate" ngbDatepicker #tad="ngbDatepicker">
+                            <button class="btn btn-outline-secondary calendar" (click)="tad.toggle()" type="button"></button>
+                            <error-handler controlName="ReleiveFromDate" displayName="{{'Relieve From'|translate}}"></error-handler>
+                          </div>
+                        </div>
+                        <div class="row mb-1">
+                          <label class="col-form-label col-lg-4">{{'Relieve To'|translate}}<span class="required-sign">*</span></label>
+                          <div class="col-lg-8 d-flex">
+                            <input class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true" name="ReleiveToDate"
+                              formControlName="ReleiveToDate" [minDate]="releiveFromDateFC.value" ngbDatepicker #rd="ngbDatepicker">
+                            <button class="btn btn-outline-secondary calendar" (click)="rd.toggle()" type="button"></button>
+                            <error-handler controlName="ReleiveToDate" displayName="{{'Relieve To'|translate}}"></error-handler>
+                          </div>
+                        </div>
+                        <div class="row mb-1">
+                          <label class="col-form-label col-lg-4">{{'Reliever' | translate}}<span class="required-sign">*</span></label>
+                          <div class="col-lg-8">
+                            <ng-select [items]="initModel?.ReleiverList" bindLabel="Name" bindValue="Id"
+                              placeholder="{{'Please Select'|translate}}" name="ReleiverId" formControlName="ReleiverId">
+                            </ng-select>
+                            <error-handler controlName="ReleiverId" displayName="{{'Reliever' | translate}}"></error-handler>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-5">
+                        <div class="row mb-1">
+                            <label class="col-form-label col-lg-3">{{'Justification'|translate}}<span class="required-sign">*</span></label>
+                            <div class="col-lg-9">
+                            <textarea name="textarea" class="form-control" formControlName="Justification" maxlength="100"
+                                name="Justification" rows="3" cols="18"></textarea>
+                                <label class="nopadding clrlbl">{{"Characters Remaining"|translate}}: {{justificationFC.value.length}} /{{100}}</label>
+                            </div>
+                            <error-handler controlName="Justification" displayName="{{'Justification'|translate}}">
+                            </error-handler>
+                        </div>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="col-12">
+       <div class="row justify-content-end">
+         <div class="mb-2">
+           <button type="submit" class="btn float-end btn-primary" (click)="onSubmit()">{{'Submit'|translate}}</button>
+         </div>
+       </div>
+     </div>
+      <app-loader-custom [loading]="loading"></app-loader-custom>
+    </div>

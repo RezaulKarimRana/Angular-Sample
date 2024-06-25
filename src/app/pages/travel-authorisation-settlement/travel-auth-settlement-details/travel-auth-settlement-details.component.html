@@ -1,0 +1,13 @@
+<div style="margin-top: 5px;margin-bottom: 5px;">
+    <p class="gridRowZeroSpacing"><b>{{'Authorization Type'|translate}}: </b><span>{{tAuthTypeName}}</span></p>
+    <p *ngIf="isWithAdvance" class="gridRowZeroSpacing"><b>{{'Total Amount'|translate}}: </b><span>{{totalAmount|currency:"BDT":"৳ "}}</span></p>
+    <p class="gridRowZeroSpacing"><b style="margin-right: 5px">{{'Status'|translate}}:</b>
+        <span *ngIf="statusName == 'Submitted'" class="badge badge-pill badge-soft-info font-size-11">{{statusName|translate}}</span>
+        <span *ngIf="statusName == 'Pending'" class="badge badge-pill badge-soft-primary font-size-11">{{statusName|translate}}</span>
+        <span *ngIf="statusName == 'Approved'" class="badge badge-pill badge-soft-success font-size-11">{{statusName|translate}}</span>
+        <span *ngIf="statusName == 'Declined'" class="badge badge-pill badge-soft-danger font-size-11">{{statusName|translate}}</span>
+        <span *ngIf="statusName == 'Hold'" class="badge badge-pill badge-soft-danger font-size-11">{{statusName|translate}}</span>
+        <span *ngIf="statusName == 'Internal Control Pending'" class="badge badge-pill badge-soft-warning font-size-11">{{statusName|translate}}</span>
+        <span *ngIf="isRevisedBill" style="margin-left: 1rem;" class="badge badge-pill badge-soft-danger font-size-11">{{'Revised Bill'|translate}}</span>
+    </p>
+</div>

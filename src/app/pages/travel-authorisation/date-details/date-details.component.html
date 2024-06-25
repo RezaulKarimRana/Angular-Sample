@@ -1,0 +1,5 @@
+<div style="margin-top: 5px;margin-bottom: 5px;">
+    <p class="gridRowZeroSpacing"><b style="margin-right: 5px">{{'TA Date'|translate}}:</b><span>{{travelAuthorizationDate}}</span></p>
+    <p *ngIf="isWithAdvance" class="gridRowZeroSpacing"><b style="margin-right: 5px">{{'AR Date'|translate}}:</b><span>{{advanceRequisitionDate}}</span></p>
+    <p *ngIf="isWithAdvance" class="gridRowZeroSpacing"><b style="margin-right: 5px">{{'Settlement Date'|translate}}:</b><span>{{tentativeSettlementDate}}</span></p>
+</div>

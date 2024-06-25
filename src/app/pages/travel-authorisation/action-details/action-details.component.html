@@ -1,0 +1,27 @@
+<div style="margin-top: 5px;margin-bottom: 5px;">
+<div>
+    <button type="button" class="gridRowZeroSpacing gridDetailbtn-action btn btn-info btn-label btn-sm waves-light" 
+        (click)="onDetails()"><i class="bx bx-detail label-icon"></i> {{'Details'|translate}}</button>
+    
+        <button *ngIf="isDeclined" type="button" class="gridRowZeroSpacing gridEditbtn-action btn btn-success btn-sm ms-1 btn-label waves-light"
+        (click)="onEdit()"><i class="bx bx-edit label-icon"></i> {{'Edit'|translate}}</button>
+</div>
+ <div *ngIf="!hasNoAction && !isDeclined && !isApproverApproved">
+     <button *ngIf="is_Approver_Pending || is_Supervisor_Pending" type="button" style="padding-right: 15px" class="gridRowZeroSpacing gridEditbtn-action btn btn-success btn-sm ms-1 btn-label waves-light"
+      (click)="onEdit()"><i class="bx bx-edit label-icon"></i> Check</button>
+ </div>
+<div>
+    <button *ngIf="canEdit" type="button" class="gridRowZeroSpacing gridDeletebtn-action btn btn-danger btn-sm ms-1 btn-label waves-light"
+        (click)="onDelete()"><i class="bx bx-trash label-icon"></i> {{'Delete'|translate}}</button>
+    <button type="button" style="padding-right: 15px"class="gridRowZeroSpacing gridEditbtn-action btn btn-success btn-sm ms-1 btn-label waves-light"
+    (click)="onExcelDownload()"><i class="bx bx-download label-icon"></i> Excel</button>
+    <button type="button" style="padding-right: 15px"class="gridRowZeroSpacing gridEditbtn-action btn btn-danger btn-sm ms-1 btn-label waves-light"
+        (click)="onDownloadPDF()"><i class="bx bxs-file-pdf label-icon"></i> Pdf</button>
+</div>
+ <div *ngIf="can_View">
+     <button *ngIf="can_View_Hold" type="button" style="padding-right: 15px;background-color: crimson;color: white;" class="gridRowZeroSpacing gridEditbtn-action btn btn-sm ms-1 btn-label waves-light"
+     (click)="onHold()"><i class="bx bx-pause-circle label-icon"></i> Hold</button>
+     <button *ngIf="isHold" type="button" style="padding-right: 15px;background-color: darkviolet;color: white;" class="gridRowZeroSpacing gridEditbtn-action btn btn-sm ms-1 btn-label waves-light"
+     (click)="onUnHold()"><i class="bx bx-pause-circle label-icon"></i> UnHold</button>
+ </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Advance Requisition Dashboard</h4>
+      <div class="row header">
+        <form [formGroup]="firstFormGroup" class="col-md-12">
+          <div data-repeater-list="outer-group" class="outer">
+            <div data-repeater-item class="outer">
+              <div class="col-md-12 d-flex">
+                <div class="col-md-1">
+                  <ng-select [items]="initModel?.StatusList" (change)="_fetchData()" bindLabel="Name" bindValue="Id"
+                    placeholder="{{'Choose Status'|translate}}" name="StatusId" formControlName="StatusId">
+                  </ng-select>
+                </div>
+                <div class="col-md-2">
+                  <ng-select [items]="initModel?.TaskTypeList" (change)="_fetchData()" bindLabel="Name" bindValue="Id"
+                    placeholder="{{'Choose Task Type'|translate}}" name="TaskTypeId" formControlName="TaskTypeId">
+                  </ng-select>
+                </div>
+                <div class="col-md-2">
+                  <ng-select [items]="initModel?.TaskTypeDetailsList" (change)="_fetchData()" bindLabel="Name" bindValue="Id"
+                    placeholder="{{'Choose Task Type Details'|translate}}" name="TaskTypeDetailsId" formControlName="TaskTypeDetailsId">
+                  </ng-select>
+                </div>
+                <div class="col-md-2">
+                  <div class="input-group mb-1">
+                    <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'Advance Requisition Date'|translate}}" [readonly]="true" name="ARDate" formControlName="ARDate" ngbDatepicker #ard="ngbDatepicker">
+                    <button class="btn btn-outline-secondary calendar" (click)="ard.toggle()" type="button"></button>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="input-group mb-1">
+                    <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'Required Date'|translate}}" [readonly]="true" name="ARRequiredDate" formControlName="ARRequiredDate" ngbDatepicker #rd="ngbDatepicker">
+                    <button class="btn btn-outline-secondary calendar" (click)="rd.toggle()" type="button"></button>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="input-group mb-1">
+                    <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'Settlement Date'|translate}}" [readonly]="true" name="TentativeSettlementDate" formControlName="TentativeSettlementDate" ngbDatepicker #sd="ngbDatepicker">
+                    <button class="btn btn-outline-secondary calendar" (click)="sd.toggle()" type="button"></button>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <button type="submit" class="btn float-end btn-primary" (click)="clearSearchValues()">Clear All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row content-table">
+        <ag-grid-angular [enableCellTextSelection]="true" style="width: 100%; height: 1250px;" class="ag-theme-alpine" [gridOptions]="gridOptions"
+        [columnDefs]="gridOptions.columnDefs" [rowData]="listData" (modelUpdated)="onModelUpdated()" (gridReady)="OnGridReady($event)">
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>

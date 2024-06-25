@@ -1,0 +1,47 @@
+.blink {
+    color: red;
+    font-weight: 600;
+    animation: animate
+        2s linear infinite;
+}
+@keyframes animate {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+#thumbwrap {
+	position:relative;
+}
+.thumb span { 
+	position:absolute;
+	visibility:hidden;
+}
+.thumb:hover, .thumb:hover span { 
+	visibility:visible;
+	top:0;
+	left:160px; 
+	z-index:1;
+}
+
+.img-padding{
+  padding: 20px 15px 0px 0px;
+}
+
+.mobile{
+    overflow-y: scroll;
+    height: 100%;
+}
+.desktop{
+    height: 100%;
+}
+.page-content {
+    margin-top: 0px!important;
+    padding-top: 0px!important;
+}

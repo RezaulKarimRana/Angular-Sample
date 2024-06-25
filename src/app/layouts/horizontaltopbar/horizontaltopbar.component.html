@@ -1,0 +1,152 @@
+<header id="page-topbar">
+  <div class="navbar-header">
+    <div class="d-flex">
+      <button type="button" class="btn btn-sm px-3 font-size-16 d-lg-none header-item" (click)="toggleMenubar()">
+        <i class="fa fa-fw fa-bars"></i>
+      </button>
+      <div class="navbar-brand-box">
+        <label style="color: #fff;font-size: 25px;margin-top: 10px;">{{"PASS"|translate}}</label>
+        <label class="hide-element" style="color: #fff;font-size: 13px;margin-left: 5px;">{{"PaperLess Advance & Settlement Solution"|translate}}</label>
+        <a routerLink="/" class="logo logo-dark" style="display: none;">
+          <span class="logo-sm">
+            <img src="assets/images/logo.svg" alt="" height="22">
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-dark.png" alt="" height="17">
+          </span>
+        </a>
+
+        <a routerLink="/" class="logo logo-light" style="display: none;">
+          <span class="logo-sm">
+            <img src="assets/images/logo-light.svg" alt="" height="22">
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-light.png" alt="" height="19">
+          </span>
+        </a>
+      </div>
+
+    </div>
+    <div class="d-flex" style="height: 30px;">
+        <div class="d-lg-inline-block me-2 hide-element">
+            <form [formGroup]="languageFormGroup" class="row">
+                <app-slide-language formControlName="IsUseEnglish" (change)="useLanguage()"></app-slide-language>
+            </form>
+        </div>
+        <div class="d-lg-inline-block me-2 hide-element" style="margin: 5px;">
+          <h4 style="color: #fff;font-size: 13px;margin-top: 5px;">{{"Login Company"|translate}} :
+            {{this.portalUserViewModel.EmpolyeeTypeName}}
+          </h4>
+        </div>
+      <div class="dropdown d-none d-lg-inline-block me-1">
+        <button type="button" class="btn header-item noti-icon"
+          style="display: inline-flex;height: 100%; margin-top: -2px;" data-toggle="fullscreen" (click)="fullscreen()">
+          <i class="bx bx-fullscreen"></i>
+        </button>
+      </div>
+      <div class="dropdown" ngbDropdown>
+        <button type="button" class="btn header-item" style="display: inline-flex;height: 100%;"
+          id="page-header-user-dropdown" ngbDropdownToggle>
+          <img class="rounded-circle" style="display: inline-block;margin: -6px 6px 0px 0px;max-height: 29px;"
+            src="{{profilePicAsByteArrayAsBase64}}" alt="Header Avatar">
+          <span class="d-none d-xl-inline-block ms-1">{{this.portalUserViewModel.FullName}}</span>
+          <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+          <a class="dropdown-item" style="color: green" href="javascript: void(0);" (click)="changePassword()"><i
+              class="fa fa-key font-size-16 align-middle me-1"></i>{{"Change Password"|translate}}</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" style="color: green" href="javascript: void(0);" (click)="showProfile()"><i
+              class="fa fa-user font-size-16 align-middle me-1"></i>
+            {{"Profile"|translate}}</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" style="color: #e0a800" href="javascript: void(0);" (click)="showUserManual()"><i
+              class="fa fa-book font-size-16 align-middle me-1 text-warning"></i>User Manual</a>
+        <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="javascript: void(0);" (click)="logout()"><i
+              class="fa fa-power-off font-size-16 align-middle me-1 text-danger"></i>
+            {{ "Logout" | translate}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="clear"></div>
+<div class="topnav">
+  <div class="container-fluid">
+    <nav class="navbar navbar-light navbar-expand-lg topnav-menu active">
+      <div class="collapse navbar-collapse active" id="topnav-menu-content">
+        <ul class="navbar-nav">
+          <ng-container *ngFor="let item of menuItems">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle arrow-none side-nav-link-ref" *ngIf="item.SubItems?.length <= 0"
+                href="javascript: void(0);" (click)="itemClick($event)" id="topnav-components" [routerLink]="item.Link" role="button">
+                <i class="bx {{item.Icon}} me-2"></i>{{ item.Label | translate }} <div class="arrow-down"
+                  *ngIf="hasItems(item)"></div>
+              </a>
+              <a *ngIf="item.SubItems?.length > 0" class="nav-link dropdown-toggle arrow-none side-nav-link-ref"
+                (click)="onMenuClick($event)" href="javascript: void(0);" id="topnav-components" role="button">
+                <i class="bx {{item.Icon}} me-1"></i>
+                {{item.Label| translate }}
+                <div class="arrow-down"></div>
+              </a>
+              <div class="dropdown-menu" [ngClass]="{'dropdown-mega-menu-xl px-2':  item.SubItems.length > 11}"
+                aria-labelledby="topnav-dashboard" *ngIf="hasItems(item)">
+                <ng-template ngFor let-i="index" let-subitem [ngForOf]="item.SubItems">
+                  <a *ngIf="item.SubItems.length < 11 && !hasItems(subitem)" class="col dropdown-item side-nav-link-ref"
+                  (click)="itemClick($event)"
+                    [routerLink]="subitem.Link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    {{subitem.Label | translate }}
+                    <span *ngIf="subitem.Count > 0" class="blink">({{ subitem?.Count }})</span>
+                  </a>
+                  <div *ngIf="item.SubItems.length > 11">
+                    <div *ngIf="i % 3 == 0" class="row">
+                      <div class="col-lg-4">
+                        <a class="dropdown-item side-nav-link-ref" routerLinkActive="active"
+                          [routerLink]="subitem.Link">{{item.SubItems[i].Label | translate}}
+                        </a>
+                      </div>
+                      <div class="col-lg-4"><a class="dropdown-item side-nav-link-ref" routerLinkActive="active"
+                          [routerLink]="item.SubItems[i + 1]?.Link">{{item.SubItems[i + 1]?.Label | translate}}</a>
+                      </div>
+                      <div class="col-lg-4"><a class="dropdown-item side-nav-link-ref" routerLinkActive="active"
+                          [routerLink]="item.SubItems[i + 2]?.Link">{{item.SubItems[i + 2]?.Label | translate}}</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dropdown" *ngIf="hasItems(subitem)">
+                    <a class="dropdown-item dropdown-toggle" href="javascript: void(0);"
+                      (click)="onMenuClick($event)">{{ subitem.Label | translate }}
+                      <div class="arrow-down"></div>
+                    </a>
+                    <div class="dropdown-menu">
+                      <ng-template ngFor let-subSubitem [ngForOf]="subitem.SubItems">
+                        <a class="dropdown-item side-nav-link-ref" *ngIf="!hasItems(subSubitem)"
+                          href="javascript: void(0);" [routerLink]="subSubitem.Link" routerLinkActive="active">{{
+                          subSubitem.Label | translate }}</a>
+                        <div class="dropdown" *ngIf="hasItems(subSubitem)">
+
+                          <a class="dropdown-item dropdown-toggle" href="javascript: void(0);"
+                            (click)="onMenuClick($event)">{{ subSubitem.Label | translate }}
+                            <div class="arrow-down"></div>
+                          </a>
+                          <div class="dropdown-menu">
+                            <ng-template ngFor let-subSubSubitem [ngForOf]="subSubitem.SubItems">
+                              <a class="dropdown-item side-nav-link-ref" href="javascript: void(0);"
+                                [routerLink]="subSubSubitem.Link" routerLinkActive="active">{{ subSubSubitem.Label | translate }}</a>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{labelListTitle}}</h4>
+    <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" [formGroup]="approverSubGroupForm">
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-5">Name</label>
+        <div class="col-lg-7 d-flex">
+          <input placeholder="Enter name" formControlName="Name" oninput="this.value = this.value.toUpperCase()" class="form-control" />
+          <error-handler controlName="Name" displayName="Name"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-5">Department</label>
+        <div class="col-lg-7">
+          <ng-select [items]="approverSubGroupModel?.DepartmentList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Please Select'|translate}}" name="DepartmentId" formControlName="DepartmentId">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-5">Approver Group</label>
+        <div class="col-lg-7">
+          <ng-select [items]="approverSubGroupModel?.ApproverGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Please Select'|translate}}" name="ApproverGroupId" formControlName="ApproverGroupId">
+          </ng-select>
+          <error-handler controlName="ApproverGroupId" displayName="Approver Group"></error-handler>
+        </div>
+      </div>
+        <div class="row mb-3">
+          <label class="col-form-label col-lg-5">{{'Status'|translate}}</label>
+          <div class="col-lg-7 d-flex">
+            <app-slide formControlName="IsActive" ></app-slide>
+          </div>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onSubmit()" type="submit" class="btn btn-primary">{{'Submit'|translate}}</button>
+  </div>

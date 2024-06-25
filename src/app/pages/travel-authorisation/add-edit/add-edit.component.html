@@ -1,0 +1,1399 @@
+<div class="container-fluid col-12" style="margin: auto">
+  <div class="col-lg-12">
+    <div class="row">
+      <div
+        style="padding-right: 5px; padding-left: 10px"
+        [ngClass]="{ 'col-lg-9': !isCollapsed, 'col-lg-12': isCollapsed }"
+      >
+        <form [formGroup]="travelAuthTypeForm">
+          <div class="card">
+            <div class="card-body row">
+              <h4 class="card-title d-inline-block">
+                {{ pageTitle | translate }}
+              </h4>
+              <hr />
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group mb-1">
+                    <div class="input-group-prepend col-6">
+                      <label class="input-group-text bg-lightgray"
+                        >{{ "Travel Authorization Type" | translate
+                        }}<span class="required-sign">*</span></label
+                      >
+                    </div>
+                    <div *ngIf="!isCheckerSet" class="col-6">
+                      <ng-select
+                        [items]="initModel?.TravelAuthorizationTypeList"
+                        bindLabel="Name"
+                        bindValue="Id"
+                        (change)="travelAuthTypeChange()"
+                        placeholder="{{ 'Please Select' | translate }}"
+                        name="TravelAuthorizationTypeId"
+                        formControlName="TravelAuthorizationTypeId"
+                      >
+                      </ng-select>
+                    </div>
+                    <div *ngIf="isCheckerSet" class="col-6 d-flex">
+                      <input
+                        disabled
+                        class="form-control"
+                        name="TravelAuthorizationTypeName"
+                        formControlName="TravelAuthorizationTypeName"
+                      />
+                    </div>
+                    <error-handler
+                      controlName="TravelAuthorizationTypeId"
+                      displayName="{{
+                        'Travel Authorization Type' | translate
+                      }}"
+                    ></error-handler>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray"
+                      >{{ "Bill Reviewer"
+                      }}<span class="required-sign">*</span></label
+                    >
+                  </div>
+                  <div class="col-6 d-flex">
+                    <input
+                      disabled
+                      class="form-control"
+                      name="SupervisorName"
+                      formControlName="SupervisorName"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        class="col-lg-3"
+        style="padding-left: 5px; padding-right: 0px"
+        *ngIf="!isCollapsed"
+      >
+        <div *ngIf="aModel != null">
+          <app-requester-employee-info
+            [profilePic]="profilePicAsByteArrayAsBase64"
+            [portalUserViewModel]="aModel?.RequesterUser"
+          ></app-requester-employee-info>
+        </div>
+        <div *ngIf="aModel == null">
+          <app-employee-info></app-employee-info>
+        </div>
+        <form style="width: 100%" [formGroup]="bankFormGroup" class="row">
+          <app-bank-account
+            #bankAccountComponent
+            formControlName="UserBankDetails"
+            (onInitalize)="onInitalizeBankAccount($event)"
+          ></app-bank-account>
+        </form>
+      </div>
+      <div style="padding-right: 5px; padding-left: 10px" class="col-lg-12">
+        <form
+          *ngIf="TravelAuthorizationTypeFc?.value == 1"
+          [formGroup]="withAdvanceForm"
+        >
+          <div class="card">
+            <div class="card-body row">
+              <h4 class="card-title d-inline-block">
+                {{ "Basic Information" | translate }}
+              </h4>
+              <hr />
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray"
+                      >{{ "Travel Authorization Date" | translate
+                      }}<span class="required-sign">*</span></label
+                    >
+                  </div>
+                  <div class="col-6 d-flex">
+                    <input
+                      class="form-control"
+                      placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                      [readonly]="true"
+                      name="TravelAuthorizationDate"
+                      formControlName="TravelAuthorizationDate"
+                      ngbDatepicker
+                      #tad="ngbDatepicker"
+                    />
+                    <button
+                      class="btn btn-outline-secondary calendar"
+                      (click)="tad.toggle()"
+                      type="button"
+                    ></button>
+                    <error-handler
+                      controlName="TravelAuthorizationDate"
+                      displayName="{{
+                        'Travel Authorization Date' | translate
+                      }}"
+                    ></error-handler>
+                  </div>
+                </div>
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray"
+                      >{{ "Advance Requisition Date" | translate
+                      }}<span class="required-sign">*</span></label
+                    >
+                  </div>
+                  <div class="col-6 d-flex">
+                    <input
+                      class="form-control"
+                      placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                      [readonly]="true"
+                      name="AdvanceRequisitionDate"
+                      formControlName="AdvanceRequisitionDate"
+                      ngbDatepicker
+                      #ard="ngbDatepicker"
+                    />
+                    <button
+                      class="btn btn-outline-secondary calendar"
+                      (click)="ard.toggle()"
+                      type="button"
+                    ></button>
+                    <error-handler
+                      controlName="AdvanceRequisitionDate"
+                      displayName="{{ 'Advance Requisition Date' | translate }}"
+                    ></error-handler>
+                  </div>
+                </div>
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray"
+                      >{{ "Tentative Settlement Date" | translate
+                      }}<span class="required-sign">*</span></label
+                    >
+                  </div>
+                  <div class="col-6 d-flex">
+                    <input
+                      class="form-control"
+                      placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                      [readonly]="true"
+                      name="TentativeSettlementDate"
+                      formControlName="TentativeSettlementDate"
+                      ngbDatepicker
+                      #tsd="ngbDatepicker"
+                    />
+                    <button
+                      class="btn btn-outline-secondary calendar"
+                      (click)="tsd.toggle()"
+                      type="button"
+                    ></button>
+                    <error-handler
+                      controlName="TentativeSettlementDate"
+                      displayName="{{
+                        'Tentative Settlement Date' | translate
+                      }}"
+                    ></error-handler>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-3">
+                    <label class="input-group-text bg-lightgray"
+                      >{{ "Justification" | translate
+                      }}<span class="required-sign">*</span></label
+                    >
+                  </div>
+                  <div class="col-9">
+                    <textarea
+                      name="textarea"
+                      class="form-control"
+                      formControlName="Justification"
+                      maxlength="100"
+                      name="Justification"
+                      rows="5"
+                      cols="18"
+                    ></textarea>
+                    <label class="nopadding clrlbl"
+                      >{{ "Characters Remaining" | translate }}:
+                      {{ withAdvJustificationFC.value.length }} /{{
+                        100
+                      }}</label
+                    >
+                  </div>
+                  <error-handler
+                    controlName="Justification"
+                    displayName="{{ 'Justification' | translate }}"
+                  ></error-handler>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body row">
+              <h4 class="card-title d-inline-block">
+                {{ "Schedule of Travel Authorization" | translate }}
+              </h4>
+              <hr />
+              <div>
+                <table
+                  class="table table-bordered align-middle table-nowrap mb-0"
+                  [ngStyle]="
+                    innerWidth < 1000 ? { width: '1200px' } : { width: '100%' }
+                  "
+                >
+                  <thead class="table-light">
+                    <tr>
+                      <th class="align-middle col-3">
+                        {{ "Location Details" | translate }}
+                      </th>
+                      <th class="align-middle col-4">
+                        {{ "Task Details" | translate }}
+                      </th>
+                      <th class="align-middle col-3">
+                        {{ "Allowance Details" | translate }}
+                      </th>
+                      <th class="align-middle col-2">
+                        {{ "Remarks" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container
+                      formArrayName="TravelAuthorizationDetailsItem"
+                      *ngFor="
+                        let item of WithTravelAuthorizationDetailsItem.controls;
+                        let i = index
+                      "
+                    >
+                      <tr
+                        [formGroupName]="i"
+                        *ngIf="
+                          WithTravelAuthorizationDetailsItem.controls[i].get(
+                            'IsActive'
+                          )?.value == true
+                        "
+                      >
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Working District" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-6">
+                              <ng-select
+                                *ngIf="!isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                (change)="onChangeWorkingDistrict($event, i)"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="WorkingDistrictId"
+                                formControlName="WorkingDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                              <ng-select
+                                [readonly]="true"
+                                *ngIf="isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                (change)="onChangeWorkingDistrict($event, i)"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="WorkingDistrictId"
+                                formControlName="WorkingDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('WorkingDistrictId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithTravelAuthorizationDetailsItem.controls[i].get('WorkingDistrictId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray">{{
+                                "District Type" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6 d-flex">
+                              <input
+                                class="form-control"
+                                formControlName="WorkingDistrictType"
+                                type="text"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Allowance per day" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6 d-flex">
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="AllowancecPerDay"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Location From" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-6">
+                              <ng-select
+                                *ngIf="!isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="LocationFromDistrictId"
+                                formControlName="LocationFromDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                              <ng-select
+                                [readonly]="true"
+                                *ngIf="isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="LocationFromDistrictId"
+                                formControlName="LocationFromDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('LocationFromDistrictId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithTravelAuthorizationDetailsItem.controls[i].get('LocationFromDistrictId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Location To" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-6">
+                              <ng-select
+                                *ngIf="!isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="LocationToDistrictId"
+                                formControlName="LocationToDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                              <ng-select
+                                [readonly]="true"
+                                *ngIf="isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="LocationToDistrictId"
+                                formControlName="LocationToDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('LocationToDistrictId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithTravelAuthorizationDetailsItem.controls[i].get('LocationToDistrictId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Task Type" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-8">
+                              <ng-select
+                                [items]="initModel?.TaskTypeList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                (change)="onChangeTaskType($event, i)"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeId"
+                                formControlName="TaskTypeId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithTravelAuthorizationDetailsItem.controls[i].get('TaskTypeId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Task Detail" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div
+                              [hidden]="
+                                !WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeId')?.touched
+                              "
+                              class="col-8"
+                            >
+                              <ng-select
+                                [items]="
+                                  withAdvanceItemsFormControl.value[i]
+                                    .TaskTypeDetailsList
+                                "
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeDetailsId"
+                                formControlName="TaskTypeDetailsId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              [hidden]="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeId')?.touched
+                              "
+                              class="col-8"
+                            >
+                              <ng-select
+                                [items]="initModel?.TaskTypeDetailsList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeDetailsId"
+                                formControlName="TaskTypeDetailsId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeDetailsId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithTravelAuthorizationDetailsItem.controls[i].get('TaskTypeDetailsId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Start Date" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                class="form-control"
+                                placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                                [readonly]="true"
+                                name="StartDate"
+                                (ngModelChange)="onChangeStartDate($event, i)"
+                                formControlName="StartDate"
+                                ngbDatepicker
+                                #sd="ngbDatepicker"
+                              />
+                              <button
+                                class="btn btn-outline-secondary calendar"
+                                (click)="sd.toggle()"
+                                type="button"
+                              ></button>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('StartDate')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithTravelAuthorizationDetailsItem.controls[i].get('StartDate')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "End Date" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                class="form-control"
+                                placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                                [readonly]="true"
+                                name="EndDate"
+                                (ngModelChange)="onChangeEndDate($event, i)"
+                                formControlName="EndDate"
+                                ngbDatepicker
+                                #ed="ngbDatepicker"
+                              />
+                              <button
+                                class="btn btn-outline-secondary calendar"
+                                (click)="ed.toggle()"
+                                type="button"
+                              ></button>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('EndDate')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithTravelAuthorizationDetailsItem.controls[i].get('EndDate')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray">{{
+                                "No Of Day" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-8 d-flex">
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="NoOfDays"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-7">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Total Daily Allowance" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-5 d-flex">
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="TotalDailyAllowance"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-7">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Travel Allowance" | translate
+                                }}<i
+                                  style="
+                                    padding-left: 0.7rem;
+                                    cursor: pointer;
+                                    color: black;
+                                  "
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Travel Allowance or TA will cover the allowance for “Transport ticket Allowance, paid to employee who is directed to travel any official business travel. Its only allowance of fare that is required by employee to reach his outstation working place and return back to workstation. This amount must be support by Valid documents. e.g. Travel Ticket."
+                                  class="fa fa-info-circle d-block font-size-15"
+                                ></i
+                              ></label>
+                            </div>
+                            <div class="col-5 d-flex">
+                              <input
+                                (change)="calculateTotalAmount(i)"
+                                (keypress)="numberOnly($event)"
+                                type="text"
+                                class="form-control"
+                                formControlName="TravelAllowance"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-7">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Entertainment" | translate
+                                }}<i
+                                  style="
+                                    padding-left: 1.8rem;
+                                    cursor: pointer;
+                                    color: black;
+                                  "
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Entertainment is the amount that required to entertain the external Parties in conducting operational activities to smoothen the business relation. This amount must be supported by valid Documents."
+                                  class="fa fa-info-circle d-block font-size-15"
+                                ></i
+                              ></label>
+                            </div>
+                            <div class="col-5 d-flex">
+                              <input
+                                (change)="calculateTotalAmount(i)"
+                                (keypress)="numberOnly($event)"
+                                type="text"
+                                class="form-control"
+                                formControlName="EntertainmentAllowance"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-7">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Miscellaneous" | translate
+                                }}<i
+                                  style="
+                                    padding-left: 1.8rem;
+                                    cursor: pointer;
+                                    color: black;
+                                  "
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Misc. expenses will cover any other incidental cost as required by for operational activities. DO NOT FORGET to explain briefly the requirements."
+                                  class="fa fa-info-circle d-block font-size-15"
+                                ></i
+                              ></label>
+                            </div>
+                            <div class="col-5 d-flex">
+                              <input
+                                (change)="calculateTotalAmount(i)"
+                                (keypress)="numberOnly($event)"
+                                type="text"
+                                class="form-control"
+                                formControlName="MiscellaneousAllowance"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-7">
+                              <label class="input-group-text bg-lightgray">{{
+                                "Total" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-5 d-flex">
+                              <input
+                                type="text"
+                                class="form-control"
+                                formControlName="Total"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td align="center">
+                          <textarea
+                            name="textarea"
+                            class="form-control"
+                            formControlName="Remarks"
+                            maxlength="100"
+                            name="Remarks"
+                            rows="7"
+                            cols="18"
+                          ></textarea>
+                          <button
+                            *ngIf="canAddItem"
+                            style="margin-top: 0.5rem"
+                            type="button"
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteAdvItems(i)"
+                          >
+                            <i
+                              class="mdi mdi-trash-can label-icon font-size-15"
+                            ></i>
+                            delete entire row
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <tr>
+                      <td colspan="2" style="background-color: #fff"></td>
+                      <td>
+                        <div class="input-group mb-1">
+                          <div class="input-group-prepend col-7">
+                            <label class="input-group-text bg-lightgray">{{
+                              "Total Allowance" | translate
+                            }}</label>
+                          </div>
+                          <div class="input-group-prepend col-5">
+                            <label class="input-group-text bg-lightgray">{{
+                              totalAllowance
+                            }}</label>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div *ngIf="canAddItem" class="pt-2">
+                  <button
+                    type="button"
+                    class="btn btn-info btn-sm"
+                    (click)="addAdvItems()"
+                  >
+                    <i class="mdi mdi-plus-thick label-icon font-size-15"></i>
+                    add new item
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form
+          *ngIf="TravelAuthorizationTypeFc?.value == 2"
+          [formGroup]="withoutAdvanceForm"
+        >
+          <div class="card">
+            <div class="card-body row">
+              <h4 class="card-title d-inline-block">
+                {{ "Basic Information" | translate }}
+              </h4>
+              <hr />
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray">{{
+                      "Travel Authorization Date" | translate
+                    }}</label>
+                  </div>
+                  <div class="col-6 d-flex">
+                    <input
+                      class="form-control"
+                      placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                      [readonly]="true"
+                      name="TravelAuthorizationDate"
+                      formControlName="TravelAuthorizationDate"
+                      ngbDatepicker
+                      #tad="ngbDatepicker"
+                    />
+                    <button
+                      class="btn btn-outline-secondary calendar"
+                      (click)="tad.toggle()"
+                      type="button"
+                    ></button>
+                    <error-handler
+                      controlName="TravelAuthorizationDate"
+                      displayName="{{
+                        'Travel Authorization Date' | translate
+                      }}"
+                    ></error-handler>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-3">
+                    <label class="input-group-text bg-lightgray"
+                      >{{ "Justification" | translate
+                      }}<span class="required-sign">*</span></label
+                    >
+                  </div>
+                  <div class="col-9">
+                    <textarea
+                      name="textarea"
+                      class="form-control"
+                      formControlName="Justification"
+                      maxlength="100"
+                      name="Justification"
+                      rows="2"
+                      cols="18"
+                    ></textarea>
+                    <label class="nopadding clrlbl"
+                      >{{ "Characters Remaining" | translate }}:
+                      {{ withoutAdvJustificationFC.value.length }} /{{
+                        100
+                      }}</label
+                    >
+                  </div>
+                  <error-handler
+                    controlName="Justification"
+                    displayName="{{ 'Justification' | translate }}"
+                  ></error-handler>
+                </div>
+              </div>
+              <div class="col-lg-12"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body row">
+              <h4 class="card-title d-inline-block">
+                {{ "Schedule of Travel Authorization" | translate }}
+              </h4>
+              <hr />
+              <div>
+                <table
+                  class="table table-bordered align-middle table-nowrap mb-0"
+                  [ngStyle]="
+                    innerWidth < 1000 ? { width: '1200px' } : { width: '100%' }
+                  "
+                >
+                  <thead class="table-light">
+                    <tr>
+                      <th class="align-middle col-3">
+                        {{ "Location Details" | translate }}
+                      </th>
+                      <th class="align-middle col-4">
+                        {{ "Task Details" | translate }}
+                      </th>
+                      <th class="align-middle col-3">
+                        {{ "Date Details" | translate }}
+                      </th>
+                      <th class="align-middle col-2">
+                        {{ "Remarks" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container
+                      formArrayName="TravelAuthorizationDetailsItem"
+                      *ngFor="
+                        let item of WithoutTravelAuthorizationDetailsItem.controls;
+                        let i = index
+                      "
+                    >
+                      <tr
+                        [formGroupName]="i"
+                        *ngIf="
+                          WithoutTravelAuthorizationDetailsItem.controls[i].get(
+                            'IsActive'
+                          )?.value == true
+                        "
+                      >
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Working District" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-6">
+                              <ng-select
+                                *ngIf="!isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                (change)="onChangeWorkingDistrict($event, i)"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="WorkingDistrictId"
+                                formControlName="WorkingDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                              <ng-select
+                                [readonly]="true"
+                                *ngIf="isCheckerSet"
+                                [items]="initModel?.DistrictList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                (change)="onChangeWorkingDistrict($event, i)"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="WorkingDistrictId"
+                                formControlName="WorkingDistrictId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithoutTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('WorkingDistrictId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithoutTravelAuthorizationDetailsItem.controls[i].get('WorkingDistrictId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-6">
+                              <label class="input-group-text bg-lightgray">{{
+                                "District Type" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6 d-flex">
+                              <input
+                                class="form-control"
+                                formControlName="WorkingDistrictType"
+                                type="text"
+                                readonly
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Task Type" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-8">
+                              <ng-select
+                                [items]="initModel?.TaskTypeList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                (change)="onChangeTaskType($event, i)"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeId"
+                                formControlName="TaskTypeId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithoutTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithoutTravelAuthorizationDetailsItem.controls[i].get('TaskTypeId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-4">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Task Detail" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div
+                              [hidden]="
+                                !WithoutTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeId')?.touched
+                              "
+                              class="col-8"
+                            >
+                              <ng-select
+                                [items]="
+                                  withoutAdvanceItemsFormControl.value[i]
+                                    .TaskTypeDetailsList
+                                "
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeDetailsId"
+                                formControlName="TaskTypeDetailsId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              [hidden]="
+                                WithoutTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeId')?.touched
+                              "
+                              class="col-8"
+                            >
+                              <ng-select
+                                [items]="initModel?.TaskTypeDetailsList"
+                                bindLabel="Name"
+                                bindValue="Id"
+                                placeholder="{{ 'Please Select' | translate }}"
+                                name="TaskTypeDetailsId"
+                                formControlName="TaskTypeDetailsId"
+                              >
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{ item.Name | translate }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithoutTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('TaskTypeDetailsId')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithoutTravelAuthorizationDetailsItem.controls[i].get('TaskTypeDetailsId')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-5">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "Start Date" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-7 d-flex">
+                              <input
+                                class="form-control"
+                                placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                                [readonly]="true"
+                                name="StartDate"
+                                (ngModelChange)="onChangeStartDate($event, i)"
+                                formControlName="StartDate"
+                                ngbDatepicker
+                                #sd="ngbDatepicker"
+                              />
+                              <button
+                                class="btn btn-outline-secondary calendar"
+                                (click)="sd.toggle()"
+                                type="button"
+                              ></button>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithoutTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('StartDate')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithoutTravelAuthorizationDetailsItem.controls[i].get('StartDate')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="input-group mb-1">
+                            <div class="input-group-prepend col-5">
+                              <label class="input-group-text bg-lightgray"
+                                >{{ "End Date" | translate
+                                }}<span class="required-sign">*</span></label
+                              >
+                            </div>
+                            <div class="col-7 d-flex">
+                              <input
+                                class="form-control"
+                                placeholder="{{ 'yyyy-mm-dd' | translate }}"
+                                [readonly]="true"
+                                name="EndDate"
+                                (ngModelChange)="onChangeEndDate($event, i)"
+                                formControlName="EndDate"
+                                ngbDatepicker
+                                #ed="ngbDatepicker"
+                              />
+                              <button
+                                class="btn btn-outline-secondary calendar"
+                                (click)="ed.toggle()"
+                                type="button"
+                              ></button>
+                            </div>
+                            <div
+                              class="text-danger"
+                              *ngIf="
+                                WithoutTravelAuthorizationDetailsItem.controls[
+                                  i
+                                ].get('EndDate')?.touched
+                              "
+                            >
+                              <span
+                                *ngIf="WithoutTravelAuthorizationDetailsItem.controls[i].get('EndDate')?.errors?.['required']"
+                                >Required</span
+                              >
+                            </div>
+                          </div>
+                        </td>
+                        <td align="center">
+                          <textarea
+                            name="textarea"
+                            class="form-control"
+                            formControlName="Remarks"
+                            maxlength="100"
+                            name="Remarks"
+                            rows="3"
+                            cols="18"
+                          ></textarea>
+                          <button
+                            *ngIf="canAddItem"
+                            style="margin-top: 0.5rem"
+                            type="button"
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteItems(i)"
+                          >
+                            <i
+                              class="mdi mdi-trash-can label-icon font-size-15"
+                            ></i>
+                            delete entire row
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <div *ngIf="canAddItem" class="pt-2">
+                  <button
+                    type="button"
+                    class="btn btn-info btn-sm"
+                    (click)="addItems()"
+                  >
+                    <i class="mdi mdi-plus-thick label-icon font-size-15"></i>
+                    add new item
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="aModel?.RunningApproverMatrixViewModel?.length > 0" class="row">
+    <app-approval-flow-details
+      [canView]="true"
+      [approverList]="aModel?.RunningApproverMatrixViewModel"
+      [approvedCount]="0"
+      [pendingCount]="0"
+      [dueCount]="0"
+    >
+    </app-approval-flow-details>
+  </div>
+  <app-approval-history
+    [canView]="
+      aModel?.TravelAuthRunningApproverMatrixHistoryViewModel?.length > 0
+    "
+    [historyList]="aModel?.TravelAuthRunningApproverMatrixHistoryViewModel"
+  >
+  </app-approval-history>
+  <div *ngIf="aModel?.TravelAuthHoldHistoryViewModel.length > 0">
+    <app-finance-hold-history
+      [historyList]="aModel?.TravelAuthHoldHistoryViewModel"
+    ></app-finance-hold-history>
+  </div>
+  <div
+    style="margin-top: 3rem"
+    *ngIf="!aModel?.Is_Approver && !aModel?.Is_Supervisor_Pending"
+    class="col-12"
+  >
+    <div class="row justify-content-end">
+      <div class="mb-2">
+        <button
+          type="submit"
+          class="btn float-end btn-primary"
+          (click)="onSubmit()"
+        >
+          {{ "Submit" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="aModel?.Is_Approver" class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Approver's Entry</h4>
+        <hr />
+        <form
+          *ngIf="aModel?.Is_Supervisor_Pending"
+          [formGroup]="recommenderFormGroup"
+        >
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-2"
+                  >{{ "Recommender" | translate
+                  }}<span class="required-sign">*</span></label
+                >
+                <div class="col-lg-4">
+                  <ng-select
+                    [items]="aModel?.RecommenderUsers"
+                    bindLabel="Name"
+                    bindValue="Id"
+                    placeholder="{{ 'Please Select' | translate }}"
+                    name="RecommenderId"
+                    formControlName="RecommenderId"
+                  >
+                  </ng-select>
+                  <error-handler
+                    controlName="RecommenderId"
+                    displayName="Recommender"
+                  ></error-handler>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <ng-template ngbNavContent>
+              <form [formGroup]="formGroup">
+                <div
+                  *ngIf="isFinanceCheck || isFinanceComplete"
+                  class="col-lg-12"
+                >
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text bg-white"
+                        >Voucher No</label
+                      >
+                    </div>
+                    <input
+                      *ngIf="isFinanceCheck"
+                      class="form-control"
+                      formControlName="VoucherNo"
+                      name="VoucherNo"
+                      type="text"
+                    />
+                    <input
+                      *ngIf="isFinanceComplete"
+                      disabled
+                      class="form-control"
+                      formControlName="VoucherNo"
+                      name="VoucherNo"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text bg-white">{{
+                        "Remarks" | translate
+                      }}</label>
+                    </div>
+                    <textarea
+                      name="textarea"
+                      class="form-control"
+                      formControlName="Remarks"
+                      name="Remarks"
+                      rows="4"
+                      cols="18"
+                      maxlength="100"
+                    ></textarea>
+                  </div>
+                  <div class="input-group mb-3">
+                    <label
+                      >{{ "Characters Remaining" | translate }}:
+                      {{ approverRemarksFC.value.length }} /{{ 100 }}</label
+                    >
+                  </div>
+                </div>
+              </form>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="customNav"></div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row justify-content-end">
+        <div class="mb-2">
+          <button
+            type="submit"
+            class="btn btn-primary btn-md btn-label waves-light float-end ms-1"
+            (click)="onVerifyAndSubmit()"
+          >
+            <i class="bx bx-save label-icon"></i> Verify & Submit
+          </button>
+          <button
+            type="submit"
+            class="btn btn-danger btn-md btn-label waves-light ms-1 float-end"
+            (click)="onReturn()"
+          >
+            <i class="bx bx-revision label-icon"></i> Return
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

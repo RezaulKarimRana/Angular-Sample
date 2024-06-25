@@ -1,0 +1,374 @@
+<div class="container-fluid col-12" style="margin: auto">
+  <div class="col-lg-12">
+    <div class="row">
+      <div style="padding-right: 5px; padding-left: 11px" class="col-lg-6">
+        <app-employee-info></app-employee-info>
+      </div>
+      <div class="col-lg-6" style="padding-left: 1px; padding-right: 2px">
+        <form style="width: 100%" [formGroup]="bankFormGroup" class="row">
+          <app-bank-account
+            #bankAccountComponent
+            formControlName="UserBankDetails"
+            (onInitalize)="onInitalizeBankAccount($event)"
+          ></app-bank-account>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div style="padding-right: 5px; padding-left: 10px" class="col-lg-12">
+    <form [formGroup]="basicForm">
+      <div class="card">
+        <div class="card-body row">
+          <h4 class="card-title d-inline-block">
+            {{ "Settlement Details" | translate }}
+          </h4>
+          <hr />
+          <div class="pt-2 table-responsive">
+            <table
+              class="table table-bordered align-middle table-nowrap mb-0"
+              [ngStyle]="
+                innerWidth < 1000 ? { width: '1200px' } : { width: '100%' }
+              "
+            >
+              <thead class="table-light">
+                <tr>
+                  <th class="align-middle col-3">
+                    {{ "Location Details" | translate }}
+                  </th>
+                  <th class="align-middle col-4">
+                    {{ "Task Details" | translate }}
+                  </th>
+                  <th class="align-middle col-3">
+                    {{ "Allowance Details" | translate }}
+                  </th>
+                  <th class="align-middle col-2">
+                    {{ "Action" | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  formArrayName="Items"
+                  *ngFor="let item of taItems.controls; let i = index"
+                >
+                  <tr
+                    [formGroupName]="i"
+                    *ngIf="taItems.controls[i].get('IsActive')?.value == true"
+                  >
+                    <td>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{
+                            "Working District" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-6">
+                          <ng-select
+                            [items]="initModel?.DistrictList"
+                            bindLabel="Name"
+                            bindValue="Id"
+                            (change)="onChangeWorkingDistrict($event, i)"
+                            placeholder="{{ 'Please Select' | translate }}"
+                            name="WorkingDistrictId"
+                            formControlName="WorkingDistrictId"
+                          >
+                            <ng-template ng-option-tmp let-item="item">
+                              {{ item.Name | translate }}
+                            </ng-template>
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{
+                            "District Type" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-6 d-flex">
+                          <input
+                            class="form-control"
+                            formControlName="WorkingDistrictType"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{
+                            "Location From" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-6">
+                          <ng-select
+                            [items]="initModel?.DistrictList"
+                            bindLabel="Name"
+                            bindValue="Id"
+                            placeholder="{{ 'Please Select' | translate }}"
+                            name="LocationFromDistrictId"
+                            formControlName="LocationFromDistrictId"
+                          >
+                            <ng-template ng-option-tmp let-item="item">
+                              {{ item.Name | translate }}
+                            </ng-template>
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{
+                            "Location To" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-6">
+                          <ng-select
+                            [items]="initModel?.DistrictList"
+                            bindLabel="Name"
+                            bindValue="Id"
+                            placeholder="{{ 'Please Select' | translate }}"
+                            name="LocationToDistrictId"
+                            formControlName="LocationToDistrictId"
+                          >
+                            <ng-template ng-option-tmp let-item="item">
+                              {{ item.Name | translate }}
+                            </ng-template>
+                          </ng-select>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{
+                            "Task Type" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-8">
+                          <ng-select
+                            [items]="initModel?.TaskTypeList"
+                            bindLabel="Name"
+                            bindValue="Id"
+                            placeholder="{{ 'Please Select' | translate }}"
+                            name="TaskTypeId"
+                            formControlName="TaskTypeId"
+                          >
+                            <ng-template ng-option-tmp let-item="item">
+                              {{ item.Name | translate }}
+                            </ng-template>
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{
+                            "Task Detail" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-8">
+                          <ng-select
+                            [items]="initModel?.TaskTypeDetailsList"
+                            bindLabel="Name"
+                            bindValue="Id"
+                            placeholder="{{ 'Please Select' | translate }}"
+                            name="TaskTypeDetailsId"
+                            formControlName="TaskTypeDetailsId"
+                          >
+                            <ng-template ng-option-tmp let-item="item">
+                              {{ item.Name | translate }}
+                            </ng-template>
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="taItems.controls[i].get('FileName')?.value != ''"
+                        class="input-group mb-1"
+                      >
+                        <div class="input-group-prepend col-12">
+                          <label
+                            style="
+                              margin-top: 7px;
+                              margin-left: 10px;
+                              color: blue;
+                              text-decoration: underline;
+                              cursor: pointer;
+                            "
+                            (click)="
+                              downloadTASettlementFile(
+                                taItems.controls[i].get('Id')?.value,
+                                taItems.controls[i].get('FileName')?.value
+                              )
+                            "
+                            >{{
+                              taItems.controls[i].get("FileName")?.value
+                            }}</label
+                          >
+                          <span
+                            style="font-size: 15px; cursor: pointer"
+                            (click)="removeLineAttachment(i)"
+                            >&#10060;</span
+                          >
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="taItems.controls[i].get('FileName')?.value == ''"
+                        class="input-group mb-1"
+                      >
+                        <div class="input-group-prepend col-12">
+                          <input
+                            *ngIf="
+                              taItems.controls[i].get('FileName')?.value == ''
+                            "
+                            id="files"
+                            type="file"
+                            class="form-control"
+                            ng2FileSelect
+                            [uploader]="uploader"
+                            (onFileSelected)="onChildFileSelected($event, i)"
+                            #inputFile
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{
+                            "Start Date" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-8 d-flex">
+                          <input
+                            min="todaysDate"
+                            class="form-control"
+                            type="datetime-local"
+                            (change)="onChangeDate(i)"
+                            name="StartDate"
+                            formControlName="StartDate"
+                          />
+                        </div>
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{
+                            "End Date" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-8 d-flex">
+                          <input
+                            min="todaysDate"
+                            class="form-control"
+                            type="datetime-local"
+                            (change)="onChangeDate(i)"
+                            name="EndDate"
+                            formControlName="EndDate"
+                          />
+                        </div>
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{
+                            "No Of Day" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-8 d-flex">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="NoOfDays"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{
+                            "Total Cost" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-8 d-flex">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="TotalCost"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td align="center">
+                      <button
+                        style="margin-top: 0.5rem"
+                        type="button"
+                        class="btn btn-info btn-sm"
+                        (click)="foodAllowanceCalculation(i)"
+                      >
+                        <i
+                          class="mdi mdi-calculator label-icon font-size-15"
+                        ></i>
+                        Food Allowance
+                      </button>
+                      <br />
+                      <button
+                        style="margin-top: 0.5rem"
+                        type="button"
+                        class="btn btn-info btn-sm"
+                        (click)="duplicateRow(i)"
+                      >
+                        <i
+                          class="mdi mdi-content-duplicate label-icon font-size-15"
+                        ></i>
+                        Duplicate Row
+                      </button>
+                      <br />
+                      <button
+                        style="margin-top: 0.5rem"
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        (click)="deleteItems(i)"
+                      >
+                        <i
+                          class="mdi mdi-trash-can label-icon font-size-15"
+                        ></i>
+                        Delete Row
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                <tr>
+                  <td colspan="2" style="background-color: #fff"></td>
+                  <td>
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                        <label class="input-group-text bg-lightgray">{{
+                          "Total Allowance" | translate
+                        }}</label>
+                      </div>
+                      <div class="input-group-prepend col-5">
+                        <label class="input-group-text bg-lightgray">{{
+                          totalSettlementStr
+                        }}</label>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div style="margin-top: 3rem" class="col-12">
+    <div class="row justify-content-end">
+      <div class="mb-2">
+        <button
+          type="submit"
+          class="btn float-end btn-primary"
+          (click)="onSubmit()"
+        >
+          {{ "Submit" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

@@ -1,0 +1,98 @@
+<div class="account-pages my-0 pt-sm-5 login-responsive">
+    <div class="container login-center">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-6">
+                <div class="glass">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="text-white p-3">
+                                <h5 class="text-white">Welcome Back !</h5>
+                                <p class="text-white">PaperLess Advance & Settlement Solution</p>
+                            </div>
+                        </div>
+                        <div class="col-4 align-self-end" style="margin:auto">
+                            <img src="assets/images/stl-white.png" style="height:100px;width:auto;float:right" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="pt-0"> 
+                        <div class="auth-logo">
+                        </div>
+                        <div class="p-2">
+                          <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                            <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+                                
+                            <div style="text-align: start" class="mb-3">
+                                <label class="text-white">{{'Employee Type'|translate}}</label>
+                                <div>
+                                    <select class="form-select" name="employeeTypeId"
+                                        formControlName="employeeTypeId" type="text">
+                                        <option value=null selected disabled hidden>Emp.Type</option>
+                                        <option *ngFor="let item of employeeTypeList" [ngValue]="item.Id">{{
+                                            item.Name }}</option>
+                                    </select>
+                                    <error-handler controlName="employeeTypeId"
+                                        displayName="{{'Employee Type'|translate}}">
+                                    </error-handler>
+                                </div>
+                            </div>
+                            <div style="text-align: start" class="mb-3">
+                                <label class="text-white">{{'HR ID'|translate}}</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="hrId" formControlName="hrId"
+                                        placeholder="Enter HR Id">
+                                    <error-handler controlName="hrId" displayName="{{'HR ID'|translate}}">
+                                    </error-handler>
+                                </div>
+                            </div>
+        
+                            <div class="mb-3">
+                                <div class="float-end">
+                                    <a href="/account/forgotPassword" class="text-white">Forgot password?</a>
+                                </div>
+                                <label class="text-white">Password</label>
+                                <div class="form-group inner-addon right-addon">
+                                    <div class="input-group col-6 mx-auto">
+                                      <input name="password" formControlName="password"
+                                          [type]="showPassword ? 'text' : 'password'"
+                                          class="form-control pwd-control"
+                                          id="password-field" placeholder="Password">
+                                      <div>
+                                        <i alt="show" class="far fa-eye eye-show" 
+                                        (click)="showPassword = !showPassword"
+                                        [class.hide]="showPassword"></i>
+                                        <i alt="hide" class="far fa-eye-slash eye-hide" 
+                                        (click)="showPassword = !showPassword"
+                                        [class.hide]="!showPassword"></i>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                      <span *ngIf="f.password.errors.required">Password is required</span>
+                                    </div>
+                                  </div>
+                              </div>
+  
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember-check">
+                                <label class="form-check-label" class="text-white">
+                                    Remember me
+                                </label>
+                              </div>
+                              <div class="text-center">
+                                  <button style="width: 30%;" class="btn btn-primary waves-effect waves-light text-white" type="submit">Log In</button>
+                              </div>
+                            </form>
+                        </div>
+    
+                    </div>
+                </div>
+                <div class="mt-3 text-center text-white">
+                    <div>
+                      <span>{{year}} © PaperLess Advance & Settlement Solution</span><br>
+                      <span>Design & Developed by Summit Communications Limited (IT-Development)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-loader-custom [loading]="loading"></app-loader-custom>
+  </div>

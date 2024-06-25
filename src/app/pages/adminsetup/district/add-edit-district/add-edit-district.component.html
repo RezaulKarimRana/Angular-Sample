@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{labelListTitle}}</h4>
+  <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="row" [formGroup]="districtForm">
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">Name <span class="required-sign">*</span></label>
+      <div class="col-lg-6">
+        <input placeholder="Enter Name" formControlName="Name" type="text" class="form-control" />
+        <error-handler controlName="Name" displayName="Name"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">Rio <span class="required-sign">*</span></label>
+      <div class="col-lg-6">
+        <select class="form-control" name="RioId" formControlName="RioId" type="text">
+          <option value="" selected disabled>Choose Rio</option>
+          <option value="1">RIO 1</option>
+          <option value="2">RIO 2</option>
+          <option value="3">RIO 3</option>
+          <option value="4">RIO 4</option>
+        </select>
+        <error-handler controlName="RioId" displayName="Rio"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">Is Major <span class="required-sign">*</span></label>
+      <div class="col-lg-6 d-flex">
+        <app-slide formControlName="IsMajor" ></app-slide>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">Status<span class="required-sign">*</span></label>
+      <div class="col-lg-6 d-flex">
+        <app-slide formControlName="IsActive" ></app-slide>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="onSubmit()" type="submit" class="btn btn-primary">Submit</button>
+</div>

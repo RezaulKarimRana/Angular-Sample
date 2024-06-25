@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="card-title">Internal Verification Details</h4>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="table-responsive" style="min-height: 100px;">
+            <table class="table table-bordered table-striped mb-0">
+              <thead>
+                <tr class="tableheader">
+                  <th scope="col">{{'Approver Name'|translate}}</th>
+                  <th scope="col">{{'Completion Date'|translate}}</th>
+                  <th scope="col" style="text-align: -webkit-center;">{{'Approval Status'|translate}}</th>
+                  <th scope="col">{{'Remarks'|translate}}</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of internalControlList let i = index;">
+                  <td style="width: 100px;">
+                    <div [ngClass]="item?.UserName ? 'd-inline-flex' : 'd-inline'">
+                      <div *ngIf="item?.UserName; else groupName">
+                        {{ item?.UserName }}
+                      </div>
+                      <ng-template #groupName>
+                        {{ item?.ApproverGroupName }}
+                      </ng-template>
+                      <span class="pull-right">
+                        <button type="button" class="btn btn-primary btn-sm float-right" value="Show Group"
+                          (click)="showGroupApprover(item)">
+                          <i class="mdi mdi-eye d-block font-size-12"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </td>
+                  <td style="width: 100px;">{{item.ActionDateString}}</td>
+                  <td style="width: 100px;text-align: -webkit-center;">
+                    <div class="{{item.StatusName}}">{{item.StatusName}}</div>
+                  </td>
+                  <td style="width: 100px">{{item.Remarks}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

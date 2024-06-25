@@ -1,0 +1,131 @@
+<div class="container-fluid col-12" style="margin: auto">
+  <div class="col-lg-12">
+    <div class="row">
+      <div
+        style="padding-right: 5px; padding-left: 11px"
+        [ngClass]="{ 'col-lg-9': !isCollapsed, 'col-lg-12': isCollapsed }"
+      >
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title d-inline-block">
+              {{ "Basic Information" | translate }}
+            </h4>
+            <button
+              type="button"
+              (click)="isCollapsed = !isCollapsed"
+              class="btn float-end"
+            >
+              <i
+                class="mdi"
+                [ngClass]="{
+                  'mdi-arrow-all': !isCollapsed,
+                  'mdi-arrow-collapse-all': isCollapsed
+                }"
+              ></i>
+            </button>
+            <hr />
+            <div class="outer-repeater">
+              <div data-repeater-list="outer-group" class="outer">
+                <div data-repeater-item class="outer row">
+                  <form [formGroup]="taAdvanceInfoForm" class="row">
+                    <div class="row">
+                      <app-travel-authorization-advance-info
+                        #travelAuthorizationAdvanceInfoComponent
+                        formControlName="TAAdvanceInfo"
+                        [supervisorLevelName]="supervisorLevelName"
+                        (onInitalize)="onInitalizeTAAdvanceInfo($event)"
+                      ></app-travel-authorization-advance-info>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-3"
+        style="padding-left: 1px; padding-right: 2px"
+        *ngIf="!isCollapsed"
+      >
+        <app-requester-employee-info
+          [profilePic]="profilePicAsByteArrayAsBase64"
+          [portalUserViewModel]="aModel?.RequesterUser"
+        ></app-requester-employee-info>
+        <form
+          style="width: 100%"
+          [formGroup]="bankFormGroup"
+          [hidden]="!CanViewBankInfo"
+        >
+          <div class="row">
+            <app-bank-account
+              #bankAccountComponent
+              formControlName="UserBankDetails"
+              (onInitalize)="onInitalizeBankAccount($event)"
+            ></app-bank-account>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">
+            {{ "Schedule of Travel Authorization" | translate }}
+          </h4>
+          <app-travel-authorization-advance-info-details
+            [IsWithAdvance]="IsWithAdvance"
+            [items]="aModel?.TravelAuthorizationDetailsItemViewModel"
+            [totalExpense]="totalExpense"
+          ></app-travel-authorization-advance-info-details>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="canViewFinanceGroup" class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend">
+              <label class="input-group-text bg-white">Voucher No:</label>
+            </div>
+            <input
+              id="VoucherNo"
+              disabled
+              value="{{ VoucherNo }}"
+              class="form-control"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-approval-flow-details
+        [canView]="true"
+        [approverList]="aModel?.RunningApproverMatrixViewModel"
+        [approvedCount]="approvedStatusCount"
+        [pendingCount]="pendingStatusCount"
+        [dueCount]="dueStatusCount"
+      ></app-approval-flow-details>
+    </div>
+    <app-approval-history
+      [canView]="
+        aModel?.TravelAuthRunningApproverMatrixHistoryViewModel?.length > 0
+      "
+      [historyList]="aModel?.TravelAuthRunningApproverMatrixHistoryViewModel"
+    >
+    </app-approval-history>
+    <div *ngIf="aModel?.TravelAuthHoldHistoryViewModel.length > 0">
+      <app-finance-hold-history
+        [historyList]="aModel?.TravelAuthHoldHistoryViewModel"
+      ></app-finance-hold-history>
+    </div>
+  </div>
+  <div class="clear mb-2"></div>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

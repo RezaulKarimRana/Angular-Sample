@@ -1,0 +1,81 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{labelListTitle}}</h4>
+  <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="row" [formGroup]="bankaccountForm">
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">{{'Bank Name'|translate}}</label>
+      <div class="col-lg-6">
+        <input placeholder="{{'Enter Bank Name'|translate}}" formControlName="BankName" type="text" class="form-control" />
+        <error-handler controlName="BankName" displayName="{{'Bank Name'|translate}}"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">{{'Account No'|translate}}</label>
+      <div class="col-lg-6">
+        <input placeholder="{{'Enter Account No'|translate}}" formControlName="AccountNo" type="text" class="form-control" />
+        <error-handler controlName="AccountNo" displayName="{{'Account No'|translate}}"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">{{'Account Type'|translate}}</label>
+      <div class="col-lg-6">
+        <select class="form-control" name="AccountType" formControlName="AccountType" type="text">
+          <option value="" selected disabled>{{'Choose Account Type'|translate}}</option>
+          <option *ngFor="let item of initModel?.BankAccountTypeList" [ngValue]="item.Text">{{ item.Name }}
+          </option>
+        </select>
+        <error-handler controlName="AccountType" displayName="{{'Account Type'|translate}}"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">{{'Routing No'|translate}}</label>
+      <div class="col-lg-6">
+        <input placeholder="{{'Enter Routing No'|translate}}" formControlName="RouterNo" type="text" class="form-control" />
+        <error-handler controlName="RouterNo" displayName="{{'Routing No'|translate}}"></error-handler>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">{{'Condition'|translate}}</label>
+      <div class="col-lg-6">
+        <select class="form-control" name="Condition" formControlName="Condition" type="text">
+          <option value="" selected disabled>{{'Choose condition'|translate}}</option>
+          <option *ngFor="let item of initModel?.ConditionList" [ngValue]="item.Text">{{ item.Name }}
+          </option>
+        </select>
+        <error-handler controlName="Condition" displayName="{{'Condition'|translate}}"></error-handler>
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">{{'Department'|translate}}</label>
+      <div class="col-lg-6">
+        <select class="form-control" name="DepartmentId" formControlName="DepartmentId" type="text">
+          <option value="" selected disabled>{{'Choose Department'|translate}}</option>
+          <option *ngFor="let item of initModel?.DepartmentList" [ngValue]="item.Id">{{ item.Name }}
+          </option>
+        </select>
+        <error-handler controlName="DepartmentId" displayName="Department"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-6">User Name</label>
+      <div class="col-lg-6">
+        <ng-select [items]="usersModel" bindLabel="FullName" bindValue="Id"
+          placeholder="{{'Select User'|translate}}" [searchFn]="customSearchFn" name="UserId" formControlName="UserId" >
+          <ng-template ng-option-tmp let-item="item">
+            {{item.FullName}} + '/' + {{item.Designations?.Name|translate}} + '/' + {{item.Department?.Name}}
+          </ng-template>
+        </ng-select>
+        <error-handler controlName="UserId" displayName="User Name"></error-handler>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="onSubmit()" type="submit" class="btn btn-primary">{{'Submit'|translate}}</button>
+</div>

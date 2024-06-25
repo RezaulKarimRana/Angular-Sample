@@ -1,0 +1,311 @@
+<div class="container-fluid col-12" style="margin: auto">
+  <div class="col-lg-12">
+    <div class="row">
+      <div
+        style="padding-right: 5px; padding-left: 10px"
+        [ngClass]="{ 'col-lg-9': !isCollapsed, 'col-lg-12': isCollapsed }"
+      >
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title mb-3 d-inline-block">
+              {{ "Request No" | translate }}:<b>
+                {{ advanceViewModel?.RequestNo }}</b
+              >
+            </h4>
+            <button
+              style="background-color: #aab6f2"
+              type="button"
+              (click)="isCollapsed = !isCollapsed"
+              class="btn float-end"
+            >
+              <i
+                class="mdi"
+                [ngClass]="{
+                  'mdi-arrow-all': !isCollapsed,
+                  'mdi-arrow-collapse-all': isCollapsed
+                }"
+              ></i>
+            </button>
+            <hr />
+            <div class="outer-repeater">
+              <div data-repeater-list="outer-group" class="outer">
+                <div data-repeater-item class="outer row">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-white">{{
+                            "Requisition No" | translate
+                          }}</label>
+                        </div>
+                        <input
+                          disabled
+                          value="{{ advanceViewModel?.AdvanceRequisitionNo }}"
+                          type="text"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-white">{{
+                            "Advance Type" | translate
+                          }}</label>
+                        </div>
+                        <input
+                          disabled
+                          type="text"
+                          value="{{ advanceViewModel?.AdvanceTypeName }}"
+                          class="form-control"
+                        />
+                      </div>
+                      <div
+                        *ngIf="advanceViewModel?.AdvanceTypeId == 1"
+                        class="input-group mb-1"
+                      >
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-white">{{
+                            "Petty Cash Amount" | translate
+                          }}</label>
+                        </div>
+                        <input
+                          disabled
+                          type="text"
+                          value="{{ advanceViewModel?.TotalAmount }}"
+                          class="form-control"
+                        />
+                      </div>
+                      <div
+                        *ngIf="advanceViewModel?.AdvanceTypeId == 1"
+                        class="input-group mb-1"
+                      >
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-white">{{
+                            "Actual Cost" | translate
+                          }}</label>
+                        </div>
+                        <input
+                          disabled
+                          type="text"
+                          value="{{ advanceViewModel?.TotalCost }}"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="row mb-1">
+                        <div
+                          class="col-lg-12"
+                          *ngIf="advanceViewModel?.RefundFiles.length > 0"
+                        >
+                          <table class="table tbl table-bordered mb-0">
+                            <thead>
+                              <tr class="tableheader">
+                                <th class="text-left">Name</th>
+                                <th class="text-right">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let invFile of advanceViewModel?.RefundFiles;
+                                  let i = index
+                                "
+                              >
+                                <td>{{ invFile?.FileName }}</td>
+                                <td style="width: 10px" class="text-right">
+                                  <a
+                                    style="margin-left: 10px; cursor: pointer"
+                                    tooltip="Download"
+                                    (click)="
+                                      downloadFile(
+                                        invFile?.Id,
+                                        invFile?.FileName
+                                      )
+                                    "
+                                  >
+                                    <i class="fa fa-download"></i>
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-white">{{
+                            "Checker" | translate
+                          }}</label>
+                        </div>
+                        <input
+                          disabled
+                          value="{{ advanceViewModel?.SupervisorName }}"
+                          type="text"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text bg-white">{{
+                            "Justification" | translate
+                          }}</label>
+                        </div>
+                        <textarea
+                          class="form-control"
+                          disabled
+                          value="{{ advanceViewModel?.Justification }}"
+                          rows="4"
+                          cols="18"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-3"
+        style="padding-left: 5px; padding-right: 0px"
+        *ngIf="!isCollapsed"
+      >
+        <app-requester-employee-info
+          [profilePic]="profilePicAsByteArrayAsBase64"
+          [portalUserViewModel]="advanceViewModel?.PortalUser"
+        ></app-requester-employee-info>
+      </div>
+    </div>
+  </div>
+  <app-advance-settlement-budget-details
+    [itemList]="advanceViewModel?.Items"
+    [canEdit]="false"
+    [totalAmount]="totalAmount"
+    [totalCost]="totalCost"
+    [totalDue]="totalDue"
+    [totalRefund]="totalRefund"
+    [isDue]="isDue"
+    [isRefund]="isRefund"
+  ></app-advance-settlement-budget-details>
+  <app-approval-flow-details
+    [canView]="true"
+    [approverList]="advanceViewModel?.RunningApproverMatrixViewModel"
+    [approvedCount]="approvedStatusCount"
+    [pendingCount]="pendingStatusCount"
+    [dueCount]="dueStatusCount"
+  ></app-approval-flow-details>
+  <app-approval-history
+    [canView]="advanceViewModel?.AdvanceHistoryList?.length > 0"
+    [historyList]="advanceViewModel?.AdvanceHistoryList"
+  ></app-approval-history>
+  <form
+    *ngIf="advanceViewModel?.Is_Recommender_Group_Pending"
+    [formGroup]="recommenderFormGroup"
+  >
+    <div class="col-lg-12">
+      <div class="row">
+        <div style="padding-right: 5px; padding-left: 10px">
+          <div class="card">
+            <div class="card-body">
+              <div
+                class="row mb-3"
+                *ngIf="advanceViewModel?.AcknowledgerUsers.length > 0"
+              >
+                <label class="col-form-label col-lg-2">{{
+                  "Acknowledger" | translate
+                }}</label>
+                <div class="col-lg-4">
+                  <ng-select
+                    [items]="advanceViewModel?.AcknowledgerUsers"
+                    bindLabel="Name"
+                    bindValue="Id"
+                    placeholder="{{ 'Please Select' | translate }}"
+                    name="AcknowledgerId"
+                    formControlName="AcknowledgerId"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <div
+                class="row mb-3"
+                *ngIf="advanceViewModel?.VerifierUsers.length > 0"
+              >
+                <label class="col-form-label col-lg-2">{{
+                  "Verifier" | translate
+                }}</label>
+                <div class="col-lg-4">
+                  <ng-select
+                    [items]="advanceViewModel?.VerifierUsers"
+                    bindLabel="Name"
+                    bindValue="Id"
+                    placeholder="{{ 'Please Select' | translate }}"
+                    name="VerifierId"
+                    formControlName="VerifierId"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-2"
+                  >{{ "Recommender" | translate
+                  }}<span class="required-sign">*</span></label
+                >
+                <div class="col-lg-4">
+                  <ng-select
+                    [items]="advanceViewModel?.RecommenderUsers"
+                    bindLabel="Name"
+                    bindValue="Id"
+                    placeholder="{{ 'Please Select' | translate }}"
+                    name="RecommenderId"
+                    formControlName="RecommenderId"
+                  >
+                  </ng-select>
+                  <error-handler
+                    controlName="RecommenderId"
+                    displayName="Recommender"
+                  ></error-handler>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form [formGroup]="formGroup">
+    <app-approver-action-form
+      #approverActionFormComponent
+      [isFinanceCheck]="isFinanceCheck"
+      [isFinanceComplete]="isFinanceComplete"
+      formControlName="ApproverRemarks"
+      (onInitalize)="onInitalizeApproverRemarks($event)"
+    ></app-approver-action-form>
+    <div class="col-12">
+      <div class="row justify-content-end">
+        <div class="mb-2">
+          <button
+            type="submit"
+            class="btn btn-primary btn-md btn-label waves-light float-end ms-1"
+            (click)="onSubmit()"
+          >
+            <i class="bx bx-save label-icon"></i> Verify & Submit
+          </button>
+          <button
+            type="submit"
+            class="btn btn-danger btn-md btn-label waves-light ms-1 float-end"
+            (click)="onReturn()"
+          >
+            <i class="bx bx-revision label-icon"></i> Return
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="clear mb-2"></div>
+  <app-approval-history
+    [canView]="advanceViewModel?.AdvanceHistoryList?.length > 0"
+    [historyList]="advanceViewModel?.AdvanceHistoryList"
+  ></app-approval-history>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

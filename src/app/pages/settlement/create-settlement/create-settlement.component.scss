@@ -1,0 +1,16 @@
+.container-fluid,
+.navbar-header {
+  max-width: 100% !important;
+}
+.table-striped > tbody > tr:nth-last-child(1) > *{
+  --bs-table-accent-bg:auto;
+}
+  .card{
+    margin-bottom: 5px!important;
+  }
+
+  .tbl td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break:break-all;
+}

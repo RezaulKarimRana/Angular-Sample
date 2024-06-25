@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <app-page-title title="{{'Office Location List'|translate}}" ></app-page-title>
+  <div class="row">
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col card">
+        <div class="card-body">
+          <div class="row">
+            <div class="w-100 col">
+              <button class="btn btn-primary w-15 float-right mb-2" (click)="openModalItem(null)"> Add New</button>
+              <table id="listData" class="table table-responsive table-bordered table-lg mb-0 f-ss-14px">
+                <thead>
+                  <tr class="tableHeader">
+                    <th scope="col" class="table-header-color text-align-left">{{'Name'|translate}}</th>
+                    <th scope="col" class="table-header-color text-align-left">{{'District'|translate}}</th>
+                    <th scope="col" class="table-header-color text-align-center">{{'Status'|translate}}</th>
+                    <th scope="col" class="table-header-color text-align-center">{{'Action'|translate}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listData">
+                    <td class="text-align-center">{{item.Name|translate}}</td>
+                    <td class="text-align-center">{{item.DistrictName|translate}}</td>
+                    <td class="text-align-center">
+                      <span class="text-success" *ngIf="item.IsActive">Active</span>
+                      <span class="text-danger" *ngIf="!item.IsActive">InActive</span>
+                    </td>
+                    <td class="text-align-left">
+                      <span class="item-link" (click)="openModalItem(item)" data-toggle="tooltip" title="Edit">
+                        <i _ngcontent-lvp-c150="" class="mdi mdi-grease-pencil d-block font-size-12"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </div>
+  <!-- end row -->
+
+</div> <!-- container-fluid -->

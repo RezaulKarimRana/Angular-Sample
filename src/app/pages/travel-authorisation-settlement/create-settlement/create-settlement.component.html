@@ -1,0 +1,330 @@
+<div class="container-fluid col-12" style="margin: auto;">
+    <div class="col-lg-12">
+        <div class="row">
+          <div style="padding-right: 5px; padding-left: 10px;" [ngClass]="{'col-lg-9': !isCollapsed, 'col-lg-12': isCollapsed }">
+            <form [formGroup]="basicForm">
+              <div class="card">
+                  <div class="card-body row">
+                      <h4 class="card-title d-inline-block">{{pageTitle|translate}}</h4>
+                      <hr>
+                      <div class="col-lg-6">
+                        <div class="input-group mb-1">
+                          <div class="input-group mb-1">
+                              <div class="input-group-prepend col-6">
+                                <label class="input-group-text bg-lightgray">{{'TA Ref No' | translate}}</label>
+                              </div>
+                              <div class="col-6">
+                                  <input readonly="true" (click)="viewTA()" style="cursor: pointer; text-decoration: underline; color: blue; font-weight: bold;" type="text" class="form-control" formControlName="TARefNo">
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="row mb-1">
+                          <label class="col-form-label col-lg-6">{{'Attachment'|translate}}<span
+                              style="margin-left: 10px;color: sandybrown;">{{'10 MB'|translate}}</span></label>
+                          <div style="margin-top:10px" class="col-lg-6">
+                            <input type="file" class="mb-4 text-center" ng2FileSelect [uploader]="uploader" multiple (onFileSelected)="onFileSelected($event)" #inputFile>
+                          </div>
+                        </div>
+                        <div class="row mb-1">
+                          <div class="col-lg-12" *ngIf="SettlementFiles.length > 0">
+                            <table class="table tbl table-bordered mb-0">
+                              <thead>
+                                <tr class="tableheader">
+                                  <th class="text-left">Name</th>
+                                  <th class="text-right">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let invFile of SettlementFiles; let i = index">
+                                  <td>{{ invFile?.FileName }}</td> 
+                                  <td style="width: 10px;" class="text-right">
+                                    <a style="margin-left: 10px;cursor: pointer;" tooltip="delete" (click)="removeFile(i,invFile?.Id)">
+                                      <i class="fa fa-trash"></i>
+                                    </a>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+          </div>
+          <div class="col-lg-3" style="padding-left:5px ; padding-right: 0px;" *ngIf="!isCollapsed">
+            <app-employee-info></app-employee-info>
+            <form style="width: 100%" [formGroup]="bankFormGroup" class="row">
+              <app-bank-account #bankAccountComponent formControlName="UserBankDetails" (onInitalize)="onInitalizeBankAccount($event)"></app-bank-account>
+            </form>
+          </div>
+            <div style="padding-right: 5px; padding-left: 10px;" class="col-lg-12">
+                <form [formGroup]="basicForm">
+                    <div class="card">
+                        <div class="card-body row">
+                            <h4 class="card-title d-inline-block">{{'Settlement Details'|translate}}</h4>
+                            <hr>
+                            <div>
+                              <table class="table table-bordered align-middle table-nowrap mb-0" [ngStyle]="innerWidth < 1000 ? {'width': '1200px'} : {'width': '100%'}">
+                                    <thead class="table-light">
+                                        <tr>
+                                          <th class="align-middle col-3">{{'Location Details'|translate}}</th>
+                                          <th class="align-middle col-4">{{'Task Details'|translate}}</th>
+                                          <th class="align-middle col-3">{{'Allowance Details'|translate}}</th>
+                                          <th class="align-middle col-2">{{'Action'|translate}}</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <ng-container formArrayName="Items" *ngFor="let item of taItems.controls; let i=index">
+                                          <tr [formGroupName]="i" *ngIf="taItems.controls[i].get('IsActive')?.value == true">
+                                                <td>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-6">
+                                                      <label class="input-group-text bg-lightgray">{{'Working District' | translate}}<span class="required-sign">*</span></label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                      <ng-select [items]="initModel?.DistrictList" bindLabel="Name" bindValue="Id" (change)="onChangeWorkingDistrict($event,i)"
+                                                        placeholder="{{'Please Select' | translate}}" name="WorkingDistrictId" formControlName="WorkingDistrictId">
+                                                        <ng-template ng-option-tmp let-item="item">
+                                                          {{item.Name | translate}}
+                                                        </ng-template>
+                                                      </ng-select>
+                                                    </div>
+                                                    <div class="text-danger" *ngIf="taItems.controls[i].get('WorkingDistrictId')?.touched">
+                                                      <span *ngIf="taItems.controls[i].get('WorkingDistrictId')?.errors?.['required']">Required</span>
+                                                    </div> 
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-6">
+                                                      <label class="input-group-text bg-lightgray">{{'District Type' | translate}}</label>
+                                                    </div>
+                                                    <div class="col-6 d-flex">
+                                                      <input class="form-control" formControlName="WorkingDistrictType" type="text" readonly>
+                                                    </div>
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-6">
+                                                      <label class="input-group-text bg-lightgray">{{'Location From' | translate}}<span class="required-sign">*</span></label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                      <ng-select [items]="initModel?.DistrictList" bindLabel="Name" bindValue="Id"
+                                                        placeholder="{{'Please Select' | translate}}" name="LocationFromDistrictId" formControlName="LocationFromDistrictId">
+                                                        <ng-template ng-option-tmp let-item="item">
+                                                          {{item.Name | translate}}
+                                                        </ng-template>
+                                                      </ng-select>
+                                                    </div>
+                                                    <div class="text-danger" *ngIf="taItems.controls[i].get('LocationFromDistrictId')?.touched">
+                                                      <span *ngIf="taItems.controls[i].get('LocationFromDistrictId')?.errors?.['required']">Required</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-6">
+                                                      <label class="input-group-text bg-lightgray">{{'Location To' | translate}}<span class="required-sign">*</span></label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                      <ng-select [items]="initModel?.DistrictList" bindLabel="Name" bindValue="Id"
+                                                        placeholder="{{'Please Select' | translate}}" name="LocationToDistrictId" formControlName="LocationToDistrictId">
+                                                        <ng-template ng-option-tmp let-item="item">
+                                                          {{item.Name | translate}}
+                                                        </ng-template>
+                                                      </ng-select>
+                                                    </div>
+                                                    <div class="text-danger" *ngIf="taItems.controls[i].get('LocationToDistrictId')?.touched">
+                                                      <span *ngIf="taItems.controls[i].get('LocationToDistrictId')?.errors?.['required']">Required</span>
+                                                    </div>
+                                                  </div>
+                                                </td>
+                                                <td>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-3">
+                                                      <label class="input-group-text bg-lightgray">{{'Task Type' | translate}}<span class="required-sign">*</span></label>
+                                                    </div>
+                                                    <div class="col-9">
+                                                      <ng-select [items]="initModel?.TaskTypeList" bindLabel="Name" bindValue="Id" (change)="onChangeTaskType($event,i)"
+                                                        placeholder="{{'Please Select' | translate}}" name="TaskTypeId" formControlName="TaskTypeId">
+                                                        <ng-template ng-option-tmp let-item="item">
+                                                          {{item.Name | translate}}
+                                                        </ng-template>
+                                                      </ng-select>
+                                                    </div>
+                                                    <div class="text-danger" *ngIf="taItems.controls[i].get('TaskTypeId')?.touched">
+                                                      <span *ngIf="taItems.controls[i].get('TaskTypeId')?.errors?.['required']">Required</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-3">
+                                                      <label class="input-group-text bg-lightgray">{{'Task Detail' | translate}}<span class="required-sign">*</span></label>
+                                                    </div>
+                                                    <div [hidden]="!taItems.controls[i].get('TaskTypeId')?.touched" class="col-9">
+                                                      <ng-select [items]="itemsFC.value[i].TaskTypeDetailsList" bindLabel="Name" bindValue="Id"
+                                                        placeholder="{{'Please Select' | translate}}" name="TaskTypeDetailsId" formControlName="TaskTypeDetailsId">
+                                                        <ng-template ng-option-tmp let-item="item">
+                                                          {{item.Name | translate}}
+                                                        </ng-template>
+                                                      </ng-select>
+                                                    </div>
+                                                    <div [hidden]="taItems.controls[i].get('TaskTypeId')?.touched" class="col-9">
+                                                      <ng-select [items]="initModel?.TaskTypeDetailsList" bindLabel="Name" bindValue="Id"
+                                                        placeholder="{{'Please Select' | translate}}" name="TaskTypeDetailsId" formControlName="TaskTypeDetailsId">
+                                                        <ng-template ng-option-tmp let-item="item">
+                                                          {{item.Name | translate}}
+                                                        </ng-template>
+                                                      </ng-select>
+                                                    </div>
+                                                    <div class="text-danger" *ngIf="taItems.controls[i].get('TaskTypeDetailsId')?.touched">
+                                                      <span *ngIf="taItems.controls[i].get('TaskTypeDetailsId')?.errors?.['required']">Required</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-3">
+                                                      <label class="input-group-text bg-lightgray">{{'Allowance' | translate}}</label>
+                                                    </div>
+                                                    <div class="col-9 d-flex">
+                                                      <input type="text" class="form-control" formControlName="AllowancecPerDay" readonly>
+                                                    </div>
+                                                  </div>
+                                                  <div *ngIf="taItems.controls[i].get('FileName')?.value != ''" class="input-group mb-1">
+                                                    <div class="input-group-prepend col-12">
+                                                      <label style="margin-top: 7px; margin-left: 10px;color: blue;text-decoration: underline;cursor: pointer;">{{taItems.controls[i].get('FileName')?.value}}</label>
+                                                      <span style='font-size:15px;cursor: pointer;' (click)="removeLineAttachment(i)">&#10060;</span>
+                                                    </div>
+                                                  </div>
+                                                  <div *ngIf="taItems.controls[i].get('FileName')?.value == ''" class="input-group mb-1">
+                                                    <div class="input-group-prepend col-12">
+                                                      <input *ngIf="taItems.controls[i].get('FileName')?.value == ''" id="files" type="file" class="form-control" ng2FileSelect [uploader]="uploader" (onFileSelected)="onChildFileSelected($event,i)" #inputFile>
+                                                    </div>
+                                                  </div>
+                                                </td>
+                                                <td>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-4">
+                                                      <label class="input-group-text bg-lightgray">{{'Start Date' | translate}}<span class="required-sign">*</span></label>
+                                                    </div>
+                                                    <div class="col-8 d-flex">
+                                                      <input min="todaysDate" class="form-control" type="datetime-local" (change)="onChangeDate(i)" name="StartDate" formControlName="StartDate" >
+                                                    </div>
+                                                    <div class="text-danger" *ngIf="taItems.controls[i].get('StartDate')?.touched">
+                                                      <span *ngIf="taItems.controls[i].get('StartDate')?.errors?.['required']">Required</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-4">
+                                                      <label class="input-group-text bg-lightgray">{{'End Date' | translate}}<span class="required-sign">*</span></label>
+                                                    </div>
+                                                    <div class="col-8 d-flex">
+                                                      <input min="todaysDate" class="form-control" type="datetime-local" (change)="onChangeDate(i)" name="EndDate" formControlName="EndDate" >
+                                                    </div>
+                                                    <div class="text-danger" *ngIf="taItems.controls[i].get('EndDate')?.touched">
+                                                      <span *ngIf="taItems.controls[i].get('EndDate')?.errors?.['required']">Required</span>
+                                                    </div>
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-4">
+                                                      <label class="input-group-text bg-lightgray">{{'No Of Day' | translate}}</label>
+                                                    </div>
+                                                    <div class="col-8 d-flex">
+                                                      <input type="text" class="form-control" formControlName="NoOfDays" readonly>
+                                                    </div>
+                                                  </div>
+                                                  <div class="input-group mb-1">
+                                                    <div class="input-group-prepend col-4">
+                                                      <label class="input-group-text bg-lightgray">{{'Total Cost' | translate}}</label>
+                                                    </div>
+                                                    <div class="col-8 d-flex">
+                                                      <input type="text" class="form-control" formControlName="TotalCost" readonly>
+                                                    </div>
+                                                  </div>
+                                                </td>
+                                                <td align="center">
+                                                  <button *ngIf="taItems.controls[i].get('IsTravelAllowance')?.value == true ||(taItems.controls[i].get('IsTravelAllowance')?.value == false && taItems.controls[i].get('IsFoodAllowance')?.value == false)" style="margin-top: .5rem;" type="button" class="btn btn-info btn-sm" (click)="travelAllowanceCalculation(i)"><i class="mdi mdi-calculator label-icon font-size-15"></i> Travel Allowance</button>
+                                                  <br>
+                                                  <button *ngIf="taItems.controls[i].get('IsFoodAllowance')?.value == true ||(taItems.controls[i].get('IsTravelAllowance')?.value == false && taItems.controls[i].get('IsFoodAllowance')?.value == false)" style="margin-top: .5rem;" type="button" class="btn btn-info btn-sm" (click)="foodAllowanceCalculation(i)"><i class="mdi mdi-calculator label-icon font-size-15"></i> Food Allowance</button>
+                                                  <br>
+                                                  <button style="margin-top: .5rem;" type="button" class="btn btn-info btn-sm" (click)="duplicateRow(i)"><i class="mdi mdi-content-duplicate label-icon font-size-15"></i> Duplicate Row</button>
+                                                  <br>
+                                                  <button style="margin-top: .5rem;" type="button" class="btn btn-danger btn-sm" (click)="deleteItems(i)"><i class="mdi mdi-trash-can label-icon font-size-15"></i> Delete Row</button>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                        <tr>
+                                          <td colspan="2" style="background-color: #fff;"></td>
+                                          <td>
+                                            <div class="input-group mb-1">
+                                              <div class="input-group-prepend col-7">
+                                                <label class="input-group-text bg-lightgray">{{'Total Advance' | translate}}</label>
+                                              </div>
+                                              <div class="input-group-prepend col-5">
+                                                <label class="input-group-text bg-lightgray">{{totalAllowanceStr}}</label>
+                                              </div>
+                                              </div>
+                                              <div class="input-group mb-1">
+                                                <div class="input-group-prepend col-7">
+                                                  <label class="input-group-text bg-lightgray">{{'Total Settlement' | translate}}</label>
+                                                </div>
+                                                <div class="input-group-prepend col-5">
+                                                  <label class="input-group-text bg-lightgray">{{totalSettlementStr}}</label>
+                                                </div>
+                                              </div>
+                                              <div class="input-group mb-1" *ngIf="isDue">
+                                                <div class="input-group-prepend col-7">
+                                                  <label class="input-group-text bg-lightgray">{{'Due Amount' | translate}}</label>
+                                                </div>
+                                                <div class="input-group-prepend col-5">
+                                                  <label class="input-group-text bg-lightgray">{{totalDueStr}}</label>
+                                                </div>
+                                              </div>
+                                              <div class="input-group mb-1" *ngIf="isDue">
+                                                <div class="input-group-prepend col-7">
+                                                  <label class="input-group-text bg-lightgray">{{'Deposited Due' | translate}}</label>
+                                                </div>
+                                                <div class="input-group-prepend col-5">
+                                                  <input class="form-control" type="number" formControlName="DepositedDue" (change)="balanceCalculation()">
+                                                </div>
+                                              </div>
+                                              <div class="input-group mb-1" *ngIf="isRefund">
+                                                <div class="input-group-prepend col-7">
+                                                  <label class="input-group-text bg-lightgray">{{'Refund Amount' | translate}}</label>
+                                                </div>
+                                                <div class="input-group-prepend col-5">
+                                                  <label class="input-group-text bg-lightgray">{{totalRefundStr}}</label>
+                                                </div>
+                                              </div>
+                                              <div class="input-group mb-1" *ngIf="isRefund">
+                                                <div class="input-group-prepend col-7">
+                                                  <label class="input-group-text bg-lightgray">{{'Deposited Refund' | translate}}</label>
+                                                </div>
+                                                <div class="input-group-prepend col-5">
+                                                  <input class="form-control" type="number" formControlName="DepositedRefund" (change)="balanceCalculation()">
+                                                </div>
+                                              </div>
+                                              <div class="input-group mb-1" *ngIf="isRefund || isDue">
+                                                <div class="input-group-prepend col-7">
+                                                  <label class="input-group-text bg-lightgray">{{'Balance' | translate}}</label>
+                                                </div>
+                                                <div class="input-group-prepend col-5">
+                                                  <input class="form-control" type="number" formControlName="Balance" readonly>
+                                                </div>
+                                              </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:3rem" class="col-12">
+      <div class="row justify-content-end">
+        <div class="mb-2">
+          <button type="submit" class="btn float-end btn-primary" (click)="onSubmit()">{{'Submit'|translate}}</button>
+        </div>
+      </div>
+    </div>
+    <app-loader-custom [loading]="loading"></app-loader-custom>
+  </div>

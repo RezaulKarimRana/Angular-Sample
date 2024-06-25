@@ -1,0 +1,89 @@
+<div class="container-fluid col-12" style="margin: auto;">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title mb-3 d-inline-block">{{'Approver Entry'}}</h4>
+              <hr>
+              <div class="outer-repeater">
+                <div data-repeater-list="outer-group" class="outer">
+                  <div data-repeater-item class="outer row">
+                    <form [formGroup]="formGroup" class="row">
+                      <div class="col-lg-6">
+                        <div class="input-group mb-1">
+                          <div class="input-group-prepend w-50">
+                            <label class="input-group-text bg-white">{{'Relieve From'|translate}}</label>
+                          </div>
+                          <input id="ReleiveFromDate" disabled name="ReleiveFromDate" formControlName="ReleiveFromDate" type="datetime"
+                            class="form-control">
+                        </div>
+                        <div class="input-group mb-1">
+                          <div class="input-group-prepend w-50">
+                            <label class="input-group-text bg-white">{{'Relieve To'|translate}}</label>
+                          </div>
+                          <input id="ReleiveToDate" disabled type="text" name="ReleiveToDate"
+                            formControlName="ReleiveToDate" class="form-control">
+                        </div>
+                        <div class="input-group mb-1">
+                          <div class="input-group-prepend w-50">
+                            <label class="input-group-text bg-white">{{'Reliever'|translate}}</label>
+                          </div>
+                          <input id="ReleiverName" disabled type="text" name="ReleiverName" formControlName="ReleiverName" class="form-control">
+                        </div>                       
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend w-50">
+                            <label class="input-group-text bg-white">{{'Justification'|translate}}</label>
+                          </div>
+                          <textarea name="textarea" class="form-control" disabled formControlName="Justification"
+                            name="Justification" rows="5" cols="18"></textarea>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="table-responsive">
+          <table class="table align-middle table-nowrap mb-0 approver">
+              <thead class="table-light">
+                  <tr>
+                      <th class="align-middle">Approver Name</th>
+                      <th class="align-middle">Status</th>
+                      <th class="align-middle">Action Date</th>
+                      <th class="align-middle">Remarks</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of ReleiverRunningApproverMatrixViewModel">
+                      <td>{{item.UserName}}</td>
+                      <td>{{item.StatusName}}</td>
+                      <td>{{item.ActionDateString}}</td>
+                      <td>{{item.Remarks}}</td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="justificationFormGroup">
+      <app-approver-action-form #approverActionFormComponent formControlName="ApproverRemarks" (onInitalize)="onInitalizeApproverRemarks($event)"></app-approver-action-form>
+      <div class="col-12">
+        <div class="row justify-content-end">
+          <div class="mb-2">
+            <button type="submit" class="btn btn-primary btn-md  btn-label waves-light float-end ms-1"
+              (click)="onSubmit()"><i class="bx bx-save label-icon"></i> Verify & Submit</button>
+            <button type="submit" class="btn btn-danger btn-md  btn-label waves-light ms-1 float-end"
+              (click)="onReturn()"><i class="bx bx-revision label-icon"></i> Return</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <app-loader-custom [loading]="loading"></app-loader-custom>
+  </div>

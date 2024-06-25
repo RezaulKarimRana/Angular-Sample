@@ -1,0 +1,233 @@
+<div class="container-fluid col-12" style="margin: auto;">
+  <div class="col-lg-12">
+    <div class="row">
+      <div style="padding-right: 5px; padding-left: 10px;" [ngClass]="{'col-lg-9': !isCollapsed, 'col-lg-12': isCollapsed }">
+        <form [formGroup]="basicForm">
+          <div class="card">
+              <div class="card-body row">
+                  <h4 class="card-title d-inline-block">{{pageTitle|translate}}</h4>
+                  <hr>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text bg-lightgray">{{'Requisition Type' | translate}}</label>
+                      </div>
+                      <div class="col-6">
+                        <ng-select [items]="initModel?.AdvanceTypeList" bindLabel="Name" bindValue="Id" (change)="advanceTypeChange()"
+                          placeholder="{{'Please Select'|translate}}" name="AdvanceTypeId" formControlName="AdvanceTypeId">
+                        </ng-select>
+                      </div>
+                      <error-handler controlName="AdvanceTypeId" displayName="{{'Requisition Type' | translate}}"></error-handler>
+                    </div>
+                    <div *ngIf="isPettyCashSelected" class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text bg-lightgray">{{'Petty Cash Amount' | translate}}</label>
+                      </div>
+                      <div class="col-6">
+                        <input (keypress)="numberOnly($event)" type="text" class="form-control" formControlName="PettyCashAmount">
+                      </div>
+                    </div>
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{'Requisition Date'|translate}}</label>
+                      </div>
+                      <div class="col-6 d-flex">
+                          <input disabled class="form-control" name="ARDate" formControlName="ARDate" ngbDatepicker>
+                      </div>
+                    </div>
+                    <div *ngIf="isAdvanceSelected" class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{'Required Date'|translate}}<span class="required-sign">*</span></label>
+                      </div>
+                      <div class="col-6 d-flex">
+                        <input [minDate]="todaysDate" class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true" name="ARRequiredDate" (dateSelect)="setTentativeMaxDate()"
+                          formControlName="ARRequiredDate" ngbDatepicker #rd="ngbDatepicker">
+                        <button class="btn btn-outline-secondary calendar" (click)="rd.toggle()" type="button"></button>
+                        <error-handler controlName="ARRequiredDate" displayName="{{'Required Date'|translate}}"></error-handler>
+                      </div>
+                    </div>
+                    <div *ngIf="isAdvanceSelected && showTentativeSettlementDate" class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{'Tentative Settlement Date'|translate}}<span class="required-sign">*</span></label>
+                      </div>
+                      <div class="col-6 d-flex">
+                        <input class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true" name="TentativeSettlementDate"
+                          [minDate]="aRRequiredDateFormControl.value" [maxDate]="tentativeSettlementMaxDate" formControlName="TentativeSettlementDate" ngbDatepicker #tsd="ngbDatepicker">
+                          <button class="btn btn-outline-secondary calendar" (click)="tsd.toggle()" type="button"></button>
+                          <error-handler controlName="TentativeSettlementDate" displayName="{{'Tentative Settlement Date'|translate}}"></error-handler>
+                      </div>
+                    </div>
+                    <div class="row mb-1">
+                      <label class="col-form-label col-lg-6">{{'Attachment'|translate}}<span
+                          style="margin-left: 10px;color: sandybrown;">{{'Max 10 MB'|translate}}</span></label>
+                      <div style="margin-top:10px" class="col-lg-6">
+                        <input type="file" class="mb-4 text-center" ng2FileSelect [uploader]="uploader" multiple (onFileSelected)="onFileSelected($event)" #inputFile>
+                      </div>
+                    </div>
+                    <div class="row mb-1">
+                      <div class="col-lg-12" *ngIf="AdvanceFiles.length > 0">
+                        <table class="table tbl table-bordered mb-0">
+                          <thead>
+                            <tr class="tableheader">
+                              <th class="text-left">Name</th>
+                              <th class="text-right">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let invFile of AdvanceFiles; let i = index">
+                              <td>{{ invFile?.FileName }}</td> 
+                              <td style="width: 10px;" class="text-right">
+                                  <a style="margin-left: 10px;cursor: pointer;" tooltip="Download" (click)="downloadFile(invFile?.Id, invFile?.FileName)">
+                                    <i class="fa fa-download"></i>
+                                  </a>
+                                <a style="margin-left: 10px;cursor: pointer;" tooltip="delete" (click)="removeFile(i,invFile?.Id)">
+                                  <i class="fa fa-trash"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-4">
+                        <label class="input-group-text bg-lightgray">{{ 'Bill Reviewer'| translate}}<span class="required-sign">*</span></label>
+                      </div>
+                      <div class="col-8 d-flex">
+                        <input disabled class="form-control" name="SupervisorName" formControlName="SupervisorName">
+                      </div>
+                    </div>
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend col-4">
+                        <label class="input-group-text bg-lightgray">{{'Justification' | translate}}<span class="required-sign">*</span></label>
+                      </div>
+                      <div class="col-8">
+                        <textarea name="textarea" class="form-control" formControlName="Justification" maxlength="100" name="Justification" rows="5" cols="18"></textarea>
+                          <label class="nopadding clrlbl">{{"Characters Remaining"|translate}}: {{justificationFormControl.value.length}} /{{100}}</label>
+                      </div>
+                      <error-handler controlName="Justification" displayName="{{'Justification'|translate}}"></error-handler>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3" style="padding-left:5px ; padding-right: 0px;" *ngIf="!isCollapsed">
+        <app-employee-info></app-employee-info>
+        <form style="width: 100%" [formGroup]="bankFormGroup" class="row">
+          <app-bank-account #bankAccountComponent formControlName="UserBankDetails" (onInitalize)="onInitalizeBankAccount($event)"></app-bank-account>
+        </form>
+      </div>
+      <div class="col-lg-12" *ngIf="isAdvanceSelected">
+        <form [formGroup]="basicForm">
+          <div class="card">
+              <div class="card-body row">
+                  <h4 class="card-title d-inline-block">{{'Advance Amount Details'|translate}}</h4>
+                  <hr>
+                  <div>
+                      <table class="table table-bordered align-middle table-nowrap mb-0">
+                          <thead class="table-light">
+                              <tr>
+                                <th class="align-middle col-3">{{'Particular'|translate}}</th>
+                                <th class="align-middle col-3">{{'Description'|translate}}</th>
+                                <th class="align-middle col-3">{{'Site Code'|translate}}</th>
+                                <th class="align-middle col-3">{{'Advance Amount'|translate}}</th>
+                                <th *ngIf="canAddItem" class="align-middle col-1">{{'Action'|translate}}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <ng-container formArrayName="AdvanceAmountDetailsItem" *ngFor="let item of advanceAmountDetailsItem.controls; let i=index">
+                                <tr [formGroupName]="i" *ngIf="advanceAmountDetailsItem.controls[i].get('IsActive')?.value == true">
+                                  <td>
+                                    <div class="input-group mb-1">
+                                      <div class="col-12 d-flex">
+                                        <ng-select style="width: 100%;" [items]="initModel?.Particulars" bindLabel="Name" bindValue="Id"
+                                          placeholder="{{'Please Select' | translate}}" name="ParticularId" formControlName="ParticularId">
+                                          <ng-template ng-option-tmp let-item="item">
+                                            {{item.Name | translate}}
+                                          </ng-template>
+                                        </ng-select>
+                                      </div>
+                                      <div class="text-danger" *ngIf="advanceAmountDetailsItem.controls[i].get('ParticularId')?.touched">
+                                        <span *ngIf="advanceAmountDetailsItem.controls[i].get('ParticularId')?.errors?.['required']">Required</span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="input-group mb-1">
+                                      <div class="col-12 d-flex">
+                                        <input placeholder="Please Enter Description" type="text" class="form-control" formControlName="Description">
+                                      </div>
+                                      <div class="text-danger" *ngIf="advanceAmountDetailsItem.controls[i].get('Description')?.touched">
+                                        <span *ngIf="advanceAmountDetailsItem.controls[i].get('Description')?.errors?.['required']">Required</span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="input-group mb-1">
+                                      <div class="col-12 d-flex">
+                                        <input placeholder="Please Enter Site Code" type="text" class="form-control" formControlName="SiteCode">
+                                      </div>
+                                      <div class="text-danger" *ngIf="advanceAmountDetailsItem.controls[i].get('SiteCode')?.touched">
+                                        <span *ngIf="advanceAmountDetailsItem.controls[i].get('SiteCode')?.errors?.['required']">Required</span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="input-group mb-1">
+                                      <div class="col-12 d-flex">
+                                        <input (change)="calculateTotalAmount()" placeholder="Please Enter Amount" (keypress)="numberOnly($event)" type="text" class="form-control" formControlName="AdvanceAmount">
+                                      </div>
+                                      <div class="text-danger" *ngIf="advanceAmountDetailsItem.controls[i].get('AdvanceAmount')?.touched">
+                                        <span *ngIf="advanceAmountDetailsItem.controls[i].get('AdvanceAmount')?.errors?.['required']">Required</span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td *ngIf="canAddItem">
+                                    <button type="button" style="margin-left: 10px;" class="btn btn-danger btn-sm" (click)="deleteItems(i)"><i class="mdi mdi-trash-can d-block font-size-15"></i>delete</button>
+                                  </td>
+                                  </tr>
+                              </ng-container>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                  <div class="input-group mb-1">
+                                    <div class="input-group-prepend col-12">
+                                      <label class="input-group-text bg-lightgray">{{'Total Amount' | translate}}</label>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="input-group mb-1">
+                                    <div class="input-group-prepend col-12">
+                                      <label class="input-group-text bg-lightgray">{{totalAmount}}</label>
+                                    </div>
+                                    </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                      </table>
+                      <div *ngIf="canAddItem" class="pt-2">
+                          <button type="button" class="btn btn-info btn-sm" (click)="addItems()"><i class="mdi mdi-plus-thick label-icon font-size-15"></i> add new item</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+   <app-approval-flow-details [canView]="canViewApproverFlowDetails" [approverList]="ApproverlistData" [approvedCount]="approvedStatusCount" [pendingCount]="pendingStatusCount" [dueCount]="dueStatusCount"></app-approval-flow-details>
+   <app-approval-history [canView]="aModel?.AdvanceHistoryList?.length>0" [historyList]="aModel?.AdvanceHistoryList"></app-approval-history>
+   <div style="margin-top:5rem" class="col-12">
+     <div class="row justify-content-end">
+       <div class="mb-2">
+         <button type="submit" class="btn float-end btn-primary" (click)="onSubmit()">{{'Submit'|translate}}</button>
+       </div>
+     </div>
+   </div>
+    <app-loader-custom [loading]="loading"></app-loader-custom>
+  </div>

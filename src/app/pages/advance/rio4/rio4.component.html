@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">{{'RIO4 List'|translate}}</h4>
+        <div class="row header">
+          <form [formGroup]="firstFormGroup" class="col-md-12" style="margin-top: 5px">
+            <div class="col-md-12 d-flex">
+              <div class="col-md-2 col-marginRight">
+                <div class="input-group mb-1">
+                  <label class="col-sm-4 input-group-text bg-white">{{'Status'|translate}}</label>
+                  <ng-select (change)="_fetchData()" style="width: 60%" [items]="initModel?.StatusList" bindLabel="Name" bindValue="Id" name="StatusId" formControlName="StatusId"></ng-select>
+                </div>
+              </div>
+              <div class="col-md-4 col-marginRight">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text bg-white">{{'Advance Requisition Date'|translate}}</label>
+                  </div>
+                  <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true" name="ARDate"
+                    formControlName="ARDate" ngbDatepicker [footerTemplate]="footerAdvTemplate" #ard="ngbDatepicker">
+                  <button class="btn btn-outline-secondary calendar" (click)="ard.toggle()" type="button"></button>
+                </div>
+              </div>
+              <div class="col-md-3 col-marginRight">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text bg-white">{{'Required Date'|translate}}</label>
+                  </div>
+                  <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true"
+                    name="ARRequiredDate" formControlName="ARRequiredDate" ngbDatepicker [footerTemplate]="footerRdTemplate" #rd="ngbDatepicker"> 
+                  <button class="btn btn-outline-secondary calendar" (click)="rd.toggle()" type="button"></button>
+                </div>
+              </div>
+              <div class="col-md-3 col-marginRight">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text bg-white">{{'Settlement Date'|translate}}</label>
+                  </div>
+                  <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true"
+                    name="TentativeSettlementDate" formControlName="TentativeSettlementDate" ngbDatepicker [footerTemplate]="footerSdTemplate"
+                    #sd="ngbDatepicker">
+                  <button class="btn btn-outline-secondary calendar" (click)="sd.toggle()" type="button"></button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row content-table">
+              <ag-grid-angular [enableCellTextSelection]="true" style="width: 100%; height: 800px;" class="ag-theme-alpine" [gridOptions]="gridOptions"
+                [columnDefs]="gridOptions.columnDefs" [rowData]="listData" (modelUpdated)="onModelUpdated()" (gridReady)="OnGridReady($event)">
+              </ag-grid-angular>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #footerAdvTemplate>
+      <hr class="my-0" />
+      <button class="btn btn-primary btn-sm m-2 float-start" (click)="setAdvCurrentDate();ard.close()">Today</button>
+      <button class="btn btn-secondary btn-sm m-2 float-end" (click)="clearAdvDate();ard.close()">Clear</button>
+  </ng-template>
+  <ng-template #footerRdTemplate>
+      <hr class="my-0" />
+      <button class="btn btn-primary btn-sm m-2 float-start" (click)="setRdCurrentDate();rd.close()">Today</button>
+      <button class="btn btn-secondary btn-sm m-2 float-end" (click)="clearRdDate();rd.close()">Clear</button>
+  </ng-template>
+  <ng-template #footerSdTemplate>
+      <hr class="my-0" />
+      <button class="btn btn-primary btn-sm m-2 float-start" (click)="setSdCurrentDate();sd.close()">Today</button>
+      <button class="btn btn-secondary btn-sm m-2 float-end" (click)="clearSdDate();sd.close()">Clear</button>
+  </ng-template>

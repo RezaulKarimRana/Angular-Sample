@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">{{'Pending List'|translate}}</h4>
+      <div class="row header">
+        <form [formGroup]="firstFormGroup" class="col-md-12" style="margin-top: 5px">
+          <div class="col-md-12 d-flex">
+            <div class="col-md-2 col-marginRight">
+              <div class="input-group mb-1">
+                <label class="col-sm-4 input-group-text bg-white">{{'Status'|translate}}</label>
+                <ng-select (change)="_fetchData()" style="width: 60%" [items]="statusList" bindLabel="Name" bindValue="Id" name="StatusId" formControlName="StatusId"></ng-select>
+              </div>
+            </div>
+            <div class="col-md-3 col-marginRight">
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">Advance Requisition Date</label>
+                </div>
+                <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true" name="ARDate"
+                  formControlName="ARDate" ngbDatepicker #ard="ngbDatepicker">
+                <button class="btn btn-outline-secondary calendar" (click)="ard.toggle()" type="button"></button>
+              </div>
+            </div>
+            <div class="col-md-3 col-marginRight">
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Required Date'|translate}}</label>
+                </div>
+                <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true"
+                  name="ARRequiredDate" formControlName="ARRequiredDate" ngbDatepicker #rd="ngbDatepicker">
+                <button class="btn btn-outline-secondary calendar" (click)="rd.toggle()" type="button"></button>
+              </div>
+            </div>
+            <div class="col-md-3 col-marginRight">
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Settlement Date'|translate}}</label>
+                </div>
+                <input (dateSelect)="_fetchData()" class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true"
+                  name="TentativeSettlementDate" formControlName="TentativeSettlementDate" ngbDatepicker
+                  #sd="ngbDatepicker">
+                <button class="btn btn-outline-secondary calendar" (click)="sd.toggle()" type="button"></button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- <div *ngIf="CanSendBulkPayment" class="card h-60">
+          <div class="card-body" style="padding: 7px;border: 1px solid lightgrey;">
+            <h4 class="card-title mb-2 d-inline-block">Bulk payment processing</h4>
+            <div data-repeater-list="outer-group" class="outer">
+              <div data-repeater-item class="outer">
+                <div class="col-md-12 d-flex">
+                  <div class="col-md-3 col-marginRight">
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text bg-white">Voucher no.</label>
+                      </div>
+                      <input class="form-control" [(ngModel)]="BulkVoucherNo" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-marginRight">
+                    <div class="input-group mb-1">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text bg-white">Remarks</label>
+                      </div>
+                      <textarea class="form-control" [(ngModel)]="BulkRemarks" type="text"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-marginRight">
+                    <div class="input-group mb-1">
+                      <div style="margin-left: 5px;" class="input-group-prepend">
+                        <label class="input-group-text bg-white">Check All Request</label>
+                      </div>
+                      <app-slide style="margin-left: 5px;" [(ngModel)]="IsSelectAll"
+                        (change)="toggleSelectData(IsSelectAll)"></app-slide>
+                    </div>
+                  </div>
+                  <div style="float:right" class="col-md-2 col-marginRight">
+                    <div class="input-group mb-1">
+                      <button type="submit" class="btn btn-primary btn-md  btn-label waves-light float-end"
+                        (click)="onSubmit()"><i class="bx bx-save label-icon"></i> Verify & Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="row content-table">
+            <ag-grid-angular [enableCellTextSelection]="true" style="width: 100%; height: 800px;" class="ag-theme-alpine"
+              [gridOptions]="gridOptions" [columnDefs]="gridOptions.columnDefs" [rowData]="listData"
+              (modelUpdated)="onModelUpdated()"
+              (gridReady)="OnGridReady($event)">
+            </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>

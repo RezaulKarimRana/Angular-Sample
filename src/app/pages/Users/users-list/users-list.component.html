@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-0"></div>
+      <div class="col card">
+        <div class="card-body">
+          <h4 class="card-title mb-2 d-inline-block">User List</h4>
+          <div style="margin-top: 10px;" class="outer-repeater">
+              <div data-repeater-list="outer-group" class="outer">
+                <div data-repeater-item class="outer row">
+                  <ag-grid-angular
+                  [enableCellTextSelection]="true"
+                  style="height: 700px;"
+                  class="ag-theme-alpine"
+                  [gridOptions]="gridOptions"
+                  [columnDefs]="gridOptions.columnDefs"
+                  [rowData]="userList"
+                  [cacheOverflowSize]="cacheOverflowSize"
+                  [maxConcurrentDatasourceRequests]="maxConcurrentDatasourceRequests"
+                  [infiniteInitialRowCount]="infiniteInitialRowCount"
+                  [pagination]=true
+                  (modelUpdated)="onModelUpdated()"
+                  (gridReady)="OnGridReady($event)"
+                  >
+                  </ag-grid-angular>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-0"></div>
+  </div>
+</div>

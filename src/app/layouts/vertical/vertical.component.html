@@ -1,0 +1,16 @@
+<div id="layout-wrapper">
+
+  <app-sidebar [isCondensed]="isCondensed"></app-sidebar>
+
+  <div class="main-content">
+    <div class="page-content" style="height: 100vh !important;">
+      <!-- content -->
+      <router-outlet></router-outlet>
+    </div>
+
+    <!-- footer -->
+    <app-footer></app-footer>
+  </div>
+</div>
+
+<app-rightsidebar></app-rightsidebar>

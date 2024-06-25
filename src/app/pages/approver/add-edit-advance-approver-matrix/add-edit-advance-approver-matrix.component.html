@@ -1,0 +1,115 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{labelListTitle}}</h4>
+  <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="row" [formGroup]="advanceApproverMatrixForm">
+    <div class="col-xl-12">
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Name</label>
+        <div class="col-lg-8">
+          <input placeholder="Enter Name" formControlName="Name" oninput="this.value = this.value.toUpperCase()"
+            class="form-control" />
+          <error-handler controlName="Name" displayName="Name"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Department</label>
+        <div class="col-lg-8">
+          <ng-select [items]="initModel?.DepartmentList" bindLabel="Name" bindValue="Id" (change)="selectSubGroup()"
+            placeholder="{{'Please Select'|translate}}" name="DepartmentId" formControlName="DepartmentId">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Acknowledger Group</label>
+        <div class="col-lg-8">
+          <ng-select [items]="acknowledgerGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Acknowledger Group'|translate}}" name="AcknowledgerGroupId" formControlName="AcknowledgerGroupId">
+          </ng-select>
+          <error-handler controlName="AcknowledgerGroupId" displayName="Acknowledger Group"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Verifier Group</label>
+        <div class="col-lg-8">
+          <ng-select [items]="verifierGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Verifier Group'|translate}}" name="VerifierGroupId" formControlName="VerifierGroupId">
+          </ng-select>
+          <error-handler controlName="VerifierGroupId" displayName="Verifier Group"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Recommender Group</label>
+        <div class="col-lg-8">
+          <ng-select [items]="recommanderGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Recommender Group'|translate}}" name="RecommanderGroupId" formControlName="RecommanderGroupId">
+          </ng-select>
+          <error-handler controlName="RecommanderGroupId" displayName="Recommender Group"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">STL Checker</label>
+        <div class="col-lg-8">
+          <ng-select [items]="initModel?.UserList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose STL Checker'|translate}}" name="STLCheckerId" formControlName="STLCheckerId">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Approver</label>
+        <div class="col-lg-8">
+          <ng-select [items]="initModel?.UserList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Approver'|translate}}" name="ApproverId" formControlName="ApproverId">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Verifier HR</label>
+        <div class="col-lg-8">
+          <ng-select [items]="verifierHRGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Verifier HR'|translate}}" name="VerifierHRGroupId" formControlName="VerifierHRGroupId">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Finance Cheque Group</label>
+        <div class="col-lg-8">
+          <ng-select [items]="financeCheckGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Finance Cheque'|translate}}" name="FinanceCheckGroupId" formControlName="FinanceCheckGroupId">
+          </ng-select>
+          <error-handler controlName="FinanceCheckGroupId" displayName="Finance Cheque"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Finance Complete Group</label>
+        <div class="col-lg-8">
+          <ng-select [items]="financeCompleteGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Finance Complete Group'|translate}}" name="FinanceCompleteGroupId" formControlName="FinanceCompleteGroupId">
+          </ng-select>
+          <error-handler controlName="FinanceCompleteGroupId" displayName="Finance Complete Group"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">Internal Control Group</label>
+        <div class="col-lg-8">
+          <ng-select [items]="internalControlGroupList" bindLabel="Name" bindValue="Id"
+            placeholder="{{'Choose Internal Control Group'|translate}}" name="InternalControlGroupId" formControlName="InternalControlGroupId">
+          </ng-select>
+          <error-handler controlName="InternalControlGroupId" displayName="Internal Control Group"></error-handler>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-form-label col-lg-4">{{'Status'|translate}}</label>
+        <div class="col-lg-8">
+          <app-slide formControlName="IsActive"></app-slide>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button (click)="onSubmit()" type="submit" class="btn btn-primary">{{'Submit'|translate}}</button>
+</div>

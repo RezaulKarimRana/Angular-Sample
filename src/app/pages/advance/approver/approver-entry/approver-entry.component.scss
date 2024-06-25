@@ -1,0 +1,15 @@
+.container-fluid,
+.navbar-header {
+  max-width: 100% !important;
+}
+.table-striped > tbody > tr:nth-last-child(1) > *{
+  --bs-table-accent-bg:auto;
+}
+  .input-group-text{
+    width: 150px;
+  }
+  .card{
+    margin-bottom: 5px!important;
+  }
+
+  

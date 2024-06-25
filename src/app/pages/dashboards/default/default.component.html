@@ -1,0 +1,306 @@
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="card overflow-hidden">
+                        <div class="bg-primary bg-soft">
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="text-primary p-3">
+                                        <h5 class="text-primary">{{"PASS"|translate}}</h5>
+                                        <p>{{"Summit Towers Ltd" | translate}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-5 align-self-end" style="margin: auto;">
+                                    <img src="assets/images/logo-stl.png" style="height:100px;width:auto;float:right" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0" style="padding-bottom: 4px">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="avatar-md profile-user-wid mb-4">
+                                        <img src="{{profilePicAsByteArrayAsBase64}}" alt="" class="img-thumbnail rounded-circle">
+                                    </div>
+                                    <h5 class="font-size-15 text-truncate">{{portalUserViewModel.FullName}}</h5>
+                                    <p class="text-muted mb-0 text-truncate">{{portalUserViewModel.DesignationName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">{{"Total Advance Amount"|translate}}</p>
+                                            <h4 class="mb-0">{{dashBoardViewData?.TotalAdvanceAmount|currency:"BDT":"৳ "}}</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                <span class="avatar-title">
+                                                    <i class="bx font-size-24">&#2547;</i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">{{"Travel Claims Amount"|translate}}</p>
+                                            <h4 class="mb-0">{{dashBoardViewData?.TravelClaimsAmount|currency:"BDT":"৳ "}}</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="bx bx-map font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">{{"Approved Travel Authorization"|translate}}</p>
+                                            <h4 class="mb-0">{{dashBoardViewData?.ApprovedTravelAuthorization}}</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                <span class="avatar-title">
+                                                    <i class="bx bx bxs-taxi font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">{{"Bill Settlement Amount"| translate}}</p>
+                                            <h4 class="mb-0">{{dashBoardViewData?.BillSettlementAmount|currency:"BDT":"৳ "}}</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="bx bxs-briefcase font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">{{"Advance Requisition"|translate}}</h4>
+
+                            <div class="text-center">
+                                <div class="mb-4">
+                                    <img src="assets/images/blueMoney.png" alt="" style="width: 60px;height: 60px;">
+                                </div>
+                                <a style="font-size:22.75px;font-weight:900" href="advances/list">{{dashBoardViewData?.TotalAdvanceRequisition}}</a>
+                                <p>{{"Total Request"|translate}}</p>
+                            </div>
+
+                            <div class="table-responsive mt-4">
+                                <table class="table align-middle table-nowrap">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                <p class="mb-0">{{"Pending" | translate}}</p>
+                                            </td>
+                                            <td style="width: 25%">
+                                                <h5 class="mb-0">{{dashBoardViewData?.PendingAdvanceRequisition}}</h5></td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-danger rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.PendingAdvanceRequisitionString" [style.width]="dashBoardViewData?.PendingAdvanceRequisitionString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalAdvanceRequisitionString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{"Declined"|translate}}</p>
+                                            </td>
+                                            <td>
+                                                <h5 class="mb-0">{{dashBoardViewData?.ReturnAdvanceRequisition}}</h5>
+                                            </td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-warning rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.ReturnAdvanceRequisitionString" [style.width]="dashBoardViewData?.ReturnAdvanceRequisitionString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalAdvanceRequisitionString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{"Approved"|translate}}</p>
+                                            </td>
+                                            <td>
+                                                <h5 class="mb-0">{{dashBoardViewData?.CompleteAdvanceRequisition}}</h5>
+                                            </td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-success rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.CompleteAdvanceRequisitionString" [style.width]="dashBoardViewData?.CompleteAdvanceRequisitionString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalAdvanceRequisitionString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">{{"Travel Claims Settlement"|translate}}</h4>
+
+                            <div class="text-center">
+                                <div class="mb-4">
+                                    <i class="bx bx-map text-primary display-4"></i>
+                                </div>
+                                <a style="font-size:22.75px;font-weight:900" href="outstation/list">{{dashBoardViewData?.TotalTravelClaims}}</a>
+                                <p>{{"Total Request"|translate}}</p>
+                            </div>
+
+                            <div class="table-responsive mt-4">
+                                <table class="table align-middle table-nowrap">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                <p class="mb-0">{{"Pending" | translate}}</p>
+                                            </td>
+                                            <td style="width: 25%">
+                                                <h5 class="mb-0">{{dashBoardViewData?.PendingTravelClaims}}</h5></td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-danger rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.PendingTravelClaimsString" [style.width]="dashBoardViewData?.PendingTravelClaimsString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalTravelClaimsString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{"Declined"|translate}}</p>
+                                            </td>
+                                            <td>
+                                                <h5 class="mb-0">{{dashBoardViewData?.ReturnTravelClaims}}</h5>
+                                            </td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-warning rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.ReturnTravelClaimsString" [style.width]="dashBoardViewData?.ReturnTravelClaimsString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalTravelClaimsString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{"Approved"|translate}}</p>
+                                            </td>
+                                            <td>
+                                                <h5 class="mb-0">{{dashBoardViewData?.CompleteTravelClaims}}</h5>
+                                            </td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-success rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.CompleteTravelClaimsString" [style.width]="dashBoardViewData?.CompleteTravelClaimsString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalTravelClaimsString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">{{"Bill Settlement"|translate}}</h4>
+
+                            <div class="text-center">
+                                <div class="mb-4">
+                                    <i class="bx bxs-briefcase text-primary display-4"></i>
+                                </div>
+                                <a style="font-size:22.75px;font-weight:900" href="settlement/list">{{dashBoardViewData?.TotalBillSettlement}}</a>
+                                <p>{{"Total Request"|translate}}</p>
+                            </div>
+
+                            <div class="table-responsive mt-4">
+                                <table class="table align-middle table-nowrap">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                <p class="mb-0">{{"Pending" | translate}}</p>
+                                            </td>
+                                            <td style="width: 25%">
+                                                <h5 class="mb-0">{{dashBoardViewData?.PendingBillSettlement}}</h5></td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-danger ounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.PendingBillSettlementString" [style.width]="dashBoardViewData?.PendingBillSettlementString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalBillSettlementString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{"Declined"|translate}}</p>
+                                            </td>
+                                            <td>
+                                                <h5 class="mb-0">{{dashBoardViewData?.ReturnBillSettlement}}</h5>
+                                            </td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-warning rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.ReturnBillSettlementString" [style.width]="dashBoardViewData?.ReturnBillSettlementString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalBillSettlementString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-0">{{"Approved"|translate}}</p>
+                                            </td>
+                                            <td>
+                                                <h5 class="mb-0">{{dashBoardViewData?.CompleteBillSettlement}}</h5>
+                                            </td>
+                                            <td>
+                                                <div class="progress bg-transparent progress-sm">
+                                                    <div class="progress-bar bg-success rounded" role="progressbar" [attr.aria-valuenow]="dashBoardViewData?.CompleteBillSettlementString" [style.width]="dashBoardViewData?.CompleteBillSettlementString+'%'" aria-valuemin="0" [attr.aria-valuemax]="dashBoardViewData?.TotalBillSettlementString"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

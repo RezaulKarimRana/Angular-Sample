@@ -1,0 +1,23 @@
+<div class="table-responsive">
+  <table class="table align-middle table-nowrap mb-0 approver">
+      <thead class="table-light">
+          <tr>
+              <th class="align-middle">{{"Approver Type"|translate}}</th>
+              <th class="align-middle">{{"Approver Name"|translate}}</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of AdvanceApprovers">
+              <td>{{item.ApproverType | translate}}</td>
+              <td>
+                  <span *ngIf="item.StatusName == 'CR'" class="badge badge-pill badge-soft-info font-size-11">{{item.Name | translate}}</span>
+                  <span *ngIf="item.StatusName == 'Due'" class="badge badge-pill badge-soft-warning font-size-11">{{item.Name | translate}}</span>
+                  <span *ngIf="item.StatusName == 'Pending'" class="badge badge-pill badge-soft-primary font-size-11">{{item.Name | translate}}</span>
+                  <span *ngIf="item.StatusName == 'Completed'" class="badge badge-pill badge-soft-success font-size-11">{{item.Name | translate}}</span>
+                  <span *ngIf="item.StatusName == 'Return'" class="badge badge-pill badge-soft-danger font-size-11">{{item.Name | translate}}</span>
+                  <span *ngIf="item.StatusName == 'Internal Control Pending'" class="badge badge-pill badge-soft-warning font-size-11">{{item.Name | translate}}</span>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

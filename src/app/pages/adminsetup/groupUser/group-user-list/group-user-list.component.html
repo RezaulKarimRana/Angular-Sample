@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Group Name : {{labelListTitle}}</h4>
+  <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="table-responsive" style="min-height: 100px;">
+    <table class="table table-bordered table-striped table-nowrap mb-0">
+      <thead>
+        <tr class="tableheader">
+          <th scope="col">{{'Approver Type'|translate}}</th>
+          <th scope="col">{{'Approver Name'|translate}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of model  let i = index;">
+          <td style="width: 100px;">{{item.GroupName}}</td>
+          <td>{{item.UserName + "/" + item.UserCompany + " " + item.UserDepartment + "/" + item.UserPhone}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+</div>

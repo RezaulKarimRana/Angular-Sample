@@ -1,0 +1,8 @@
+ .table-striped > tbody > tr:nth-last-child(1) > *{
+    --bs-table-accent-bg:auto;
+  }
+  .tbl td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break:break-all;
+}

@@ -1,0 +1,55 @@
+.Completed{
+  background-color: #11dc11;
+  border-radius: 0px !important;
+  padding:0px 0px 0px 4px!important;
+  color: black !important;
+  min-width: 50px !important;
+  text-align: left;
+  margin-right: 0px;
+}
+.Pending{
+  background-color: lightcoral;
+  border-radius: 0px !important;
+  padding: 0px 0px 0px 4px!important;
+  color: black !important;
+  min-width: 50px !important;
+  text-align: left;
+  margin-right: 2px;
+}
+.Due{
+  background-color: orange;
+  border-radius: 0px !important;
+  padding: 0px 0px 0px 4px!important;
+  color: black !important;
+  min-width: 50px !important;
+  text-align: left;
+}
+.ApproverType{
+  background-color: lightgray;
+  border-radius: 0px !important;
+  padding: 0px 0px 0px 4px!important;
+  color: black !important;
+  min-width: 50px !important;
+  text-align: left;
+}
+.CR{
+  background-color: #fff;
+  border-radius: 0px !important;
+  padding: 0px 0px 0px 4px!important;
+  color: black !important;
+  min-width: 50px !important;
+  text-align: left;
+  margin-right: 0px;
+}
+
+.approver {
+  table-layout: fixed;
+  width: 100%;
+  line-height: 0px;
+}
+
+.approver td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

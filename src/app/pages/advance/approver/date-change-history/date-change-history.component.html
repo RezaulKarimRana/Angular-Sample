@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Date Change History</h4>
+    <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-responsive table-bordered table-lg mb-0 f-ss-14px">
+        <thead>
+          <tr class="tableHeader">
+            <th scope="col-1" class="table-header-color text-align-left">Change Date</th>
+            <th scope="col-1" class="table-header-color text-align-left">{{'User'|translate}}</th>
+            <th scope="col-1" class="table-header-color text-align-left">{{'Required Date'|translate}}</th>
+            <th scope="col-4" class="table-header-color text-align-left">{{'Settlement Date'|translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of aModelList">
+            <td class="text-align-center">{{item.CreatedDateString}}</td>
+            <td class="text-align-center">{{item.UserName}}</td>
+            <td class="text-align-center">{{item.ARRequiredDateString}}</td>
+            <td class="text-align-center">{{item.TentativeSettlementDateString}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <div class="modal-footer">
+  </div>

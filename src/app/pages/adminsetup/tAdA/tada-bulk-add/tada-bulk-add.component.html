@@ -1,0 +1,45 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col card">
+        <div class="card-body">
+          <h4 class="card-title mb-2 d-inline-block">TA DA Bulk Create</h4>
+          <hr>
+          <div class="outer-repeater">
+            <div data-repeater-list="outer-group" class="outer">
+              <div data-repeater-item class="outer row">
+                <div class="col-md-12 d-flex mb-2">
+                  <div class="col-md-8 form-group">
+                    <input type="file" class="form-control" (change)="addfile($event)" placeholder="Upload file"
+                      accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <input style="float: right;" type="button" class="btn btn-success inner" value="CREATE"
+                      (click)="createUser()" />
+                  </div>
+                </div>           
+                <div class="table-responsive" style="min-height: 100px;">
+                  <table class="table table-bordered table-striped table-nowrap mb-0">
+                    <thead>
+                      <tr class="tableheader">
+                        <th scope="col">{{'Designation'|translate}}</th>
+                        <th scope="col">{{'Major City Allowance'|translate}}</th>
+                        <th scope="col">{{'Minor City Allowance'|translate}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of model;">
+                        <td style="width: 100px;">{{item.DesignationName}}</td>
+                        <td style="width: 100px;">{{item.TotalAllownaceMajor}}</td>
+                        <td style="width: 100px;">{{item.TotalAllownaceMinor}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <app-loader-custom [loading]="loading"></app-loader-custom>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

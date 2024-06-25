@@ -1,0 +1,274 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Additional Information(Travel Allowance)</h4>
+    <button *ngIf="!CanEdit" type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-lg-4">
+        <div class="input-group mb-1">
+          <div class="input-group-prepend col-7">
+            <label class="input-group-text bg-lightgray">Is Stay On Hotel</label>
+          </div>
+          <app-slide-yes-no style="margin-left: 5px;" [disabled]="!CanEdit" [(ngModel)]="ItemObj.IsStayOnHotel" (change)="calculateAmount()"></app-slide-yes-no>
+        </div>
+        <div class="input-group mb-1">
+          <div class="input-group-prepend col-7">
+            <label class="input-group-text bg-lightgray">Has Own Accomodation</label>
+          </div>
+          <app-slide-yes-no style="margin-left: 5px;" [disabled]="!CanEdit" [(ngModel)]="ItemObj.HasOwnAccomodation" (change)="calculateAmount()"></app-slide-yes-no>
+        </div>
+        <div class="input-group mb-1">
+          <div class="input-group-prepend col-7">
+            <label class="input-group-text bg-lightgray">Has Local Conveyance</label>
+          </div>
+          <app-slide-yes-no style="margin-left: 5px;" [disabled]="!CanEdit" [(ngModel)]="ItemObj.HasLocalConveyance" (change)="calculateAmount()"></app-slide-yes-no>
+        </div>
+        <div *ngIf="ItemObj.HasLocalConveyance" class="input-group mb-1">
+          <div class="input-group-prepend col-7">
+            <label class="input-group-text bg-lightgray">Local Conveyance No</label>
+          </div>
+          <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.TotalLocalConveyance" (change)="onChangeTravel()">
+        </div>
+        <div *ngIf="ItemObj.HasLocalConveyance" class="input-group mb-1">
+          <div class="input-group-prepend col-7">
+            <label class="input-group-text bg-lightgray">Local Conveyance Amount</label>
+          </div>
+          <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.LocalConveyanceAmount" (change)="calculateAmount()">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="input-group mb-1">
+          <div class="input-group-prepend col-6">
+            <label class="input-group-text bg-lightgray">Is Office Vehicle Used</label>
+          </div>
+          <app-slide-yes-no style="margin-left: 5px;" [disabled]="!CanEdit" [(ngModel)]="ItemObj.IsOfficeVehicleUsed" (change)="calculateAmount()"></app-slide-yes-no>
+        </div>
+        <div *ngIf="ItemObj.IsOfficeVehicleUsed" class="input-group mb-1">
+          <div class="input-group-prepend col-6">
+            <label class="input-group-text bg-lightgray">Office Vehicle(No)</label>
+          </div>
+          <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.TotalOfficeVehicle" (change)="onChangeTravel()">
+        </div>
+        <div class="input-group mb-1">
+          <div class="input-group-prepend col-6">
+            <label class="input-group-text bg-lightgray">Travel Cost<i style="padding-left: 1.4rem;cursor:pointer;color:black;" data-toggle="tooltip" data-placement="top" title="Travel Allowance or TA will cover the allowance for “Transport ticket Allowance, paid to employee who is directed to travel any official business travel. Its only allowance of fare that is required by employee to reach his outstation working place and return back to workstation. This amount must be support by Valid documents. e.g. Travel Ticket." class="fa fa-info-circle d-block font-size-15"></i></label>
+          </div>
+          <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.TravelCost" (change)="calculateAmount()">
+        </div>
+        <div class="input-group mb-1">
+          <div class="input-group-prepend col-6">
+            <label class="input-group-text bg-lightgray">Entertainment<i style="padding-left: .3rem;cursor:pointer;color:black;" data-toggle="tooltip" data-placement="top" title="Entertainment is the amount that required to entertain the external Parties in conducting operational activities to smoothen the business relation. This amount must be supported by valid Documents." class="fa fa-info-circle d-block font-size-15"></i></label>
+          </div>
+          <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.EntertainmentCost" (change)="calculateAmount()">
+        </div>
+        <div class="input-group mb-1">
+          <div class="input-group-prepend col-6">
+            <label class="input-group-text bg-lightgray">Miscellaneous<i style="padding-left: .3rem;cursor:pointer;color:black;" data-toggle="tooltip" data-placement="top" title="Misc. expenses will cover any other incidental cost as required by for operational activities. DO NOT FORGET to explain briefly the requirements." class="fa fa-info-circle d-block font-size-15"></i></label>
+          </div>
+          <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.MiscellaneousCost" (change)="calculateAmount()">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <textarea name="textarea" [disabled]="!CanEdit" placeholder="Write Remarks here..." class="form-control" [(ngModel)]="ItemObj.DeductionRemarks" rows="7" cols="18"></textarea>
+      </div>
+  </div>
+    <h4 class="modal-title mb-3" id="modal-basic-title">Allowance Details</h4>
+    <div class="row mb-3">
+        <div class="col-lg-3">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Breakfast (TK)</label>
+            </div>
+            <input class="form-control" value="{{ItemObj.BreakFastAllowance}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Lunch (TK)</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.LunchAllowance}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Snacks (TK)</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.SnacksAllowance}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Dinner (TK)</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.DinnerAllowance}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Hotel (TK)</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.HotelAllowance}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Local Travel (TK)</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.LocalTravelAllowance}}" disabled>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Total Breakfast</label>
+            </div>
+            <input class="form-control" value="{{ItemObj.TotalBreakFast}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Total Lunch</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalLunch}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Total Snacks</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalSnacks}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Total Dinner</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalDinner}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Total Hotel Stay</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalHotelStay}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Total Local Travel</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalLocalTravel}}" disabled>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Actual Breakfast</label>
+            </div>
+            <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.ActualBreakFast" (change)="onChangeBreakFast()">
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Actual Lunch</label>
+            </div>
+            <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.ActualLunch" (change)="onChangeLunch()">
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Actual Snacks</label>
+            </div>
+            <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.ActualSnacks" (change)="onChangeSnacks()">
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Actual Dinner</label>
+            </div>
+            <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.ActualDinner" (change)="onChangeDinner()">
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Actual Hotel Stay</label>
+            </div>
+            <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.ActualHotelStay" (change)="calculateAmount()">
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-7">
+              <label class="input-group-text bg-lightgray">Actual Local Travel</label>
+            </div>
+            <input class="form-control" type="number" [disabled]="!CanEdit" [(ngModel)]="ItemObj.ActualLocalTravel" (change)="onChangeLocalTravel()">
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Total</label>
+            </div>
+            <input class="form-control" value="{{ItemObj.TotalBreakFastAmount}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Total</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalLunchAmount}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Total</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalSnacksAmount}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Total</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalDinnerAmount}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Total</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalHotelStayAmount}}" disabled>
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Total</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalLocalTravelAmount}}" disabled>
+          </div>
+          <div *ngIf="ItemObj.LocalConveyanceAmount>0" class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">L. Conveyance</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.LocalConveyanceAmount}}" disabled>
+          </div>
+          <div *ngIf="ItemObj.TravelCost>0" class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Travel Cost</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TravelCost}}" disabled>
+          </div>
+          <div *ngIf="ItemObj.EntertainmentCost>0" class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Entertainment</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.EntertainmentCost}}" disabled>
+          </div>
+          <div *ngIf="ItemObj.MiscellaneousCost>0" class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+                <label class="input-group-text bg-lightgray">Miscellaneous</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.MiscellaneousCost}}" disabled>
+          </div>
+        </div>
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-3">
+          <div class="input-group mb-1">
+            <div class="input-group-prepend col-6">
+              <label class="input-group-text bg-lightgray">Total Cost</label>
+            </div>
+            <input class="form-control"  value="{{ItemObj.TotalCost}}" disabled>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="CanEdit" type="submit" class="btn btn-primary btn-md  btn-label waves-light float-end ms-1"
+            (click)="closeModal()"><i class="bx bx-save label-icon"></i> Update & Close</button>
+  </div>

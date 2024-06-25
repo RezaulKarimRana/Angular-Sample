@@ -1,0 +1,62 @@
+<div class="row">
+  <form [formGroup]="form" class="row">
+    <div class="col-lg-6">
+      <div class="input-group mb-1">
+        <div class="input-group-prepend col-7">
+          <label class="input-group-text bg-white">{{'Travel Authorization Type'|translate}}</label>
+        </div>
+        <div class="col-5 d-flex">
+          <input disabled class="form-control" name="TravelAuthorizationTypeName" formControlName="TravelAuthorizationTypeName">
+        </div>
+      </div>
+      <div class="input-group mb-1">
+        <div class="input-group-prepend col-7">
+          <label class="input-group-text bg-white">{{'Travel Authorization Date'|translate}}</label>
+        </div>
+        <div class="col-5 d-flex">
+          <input disabled class="form-control" name="TravelAuthorizationDate" formControlName="TravelAuthorizationDate" ngbDatepicker #ard="ngbDatepicker">
+          <button disabled class="btn btn-outline-secondary calendar" (click)="ard.toggle()" type="button"></button>
+        </div>
+      </div>
+      <div *ngIf="IsWithAdvance" class="input-group mb-1">
+        <div class="input-group-prepend col-7">
+          <label class="input-group-text bg-white">{{'Advance Requisition Date'|translate}}</label>
+        </div>
+        <div class="col-5 d-flex">
+          <input disabled class="form-control" name="AdvanceRequisitionDate" formControlName="AdvanceRequisitionDate" ngbDatepicker #ard="ngbDatepicker">
+          <button disabled class="btn btn-outline-secondary calendar" (click)="ard.toggle()" type="button"></button>
+        </div>
+      </div>
+      <div *ngIf="IsWithAdvance" class="input-group mb-1">
+        <div class="input-group-prepend col-7">
+          <label class="input-group-text bg-white">{{'Tentative Settlement Date'|translate}}</label>
+        </div>
+        <div class="col-5 d-flex">
+          <input class="form-control" placeholder="{{'yyyy-mm-dd'|translate}}" [readonly]="true" name="TentativeSettlementDate"
+           formControlName="TentativeSettlementDate" ngbDatepicker #sd="ngbDatepicker">
+          <button disabled class="btn btn-outline-secondary calendar" (click)="sd.toggle()" type="button"></button>
+          <error-handler controlName="TentativeSettlementDate" displayName="{{'Tentative Settlement Date'|translate}}"></error-handler>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="input-group mb-1">
+        <div class="input-group-prepend col-5">
+          <label class="input-group-text bg-white">{{supervisorLevelName}}</label>
+        </div>
+        <div class="col-7 d-flex">
+          <input disabled class="form-control" name="SupervisorName" formControlName="SupervisorName">
+        </div>
+      </div>
+      <div class="input-group mb-1">
+        <div class="input-group-prepend col-5">
+          <label class="input-group-text bg-white">{{'Justification'|translate}}</label>
+        </div>
+        <div class="col-lg-7">
+          <textarea *ngIf="IsWithAdvance" disabled name="textarea" class="form-control" formControlName="Justification" maxlength="100" name="Justification" rows="5" cols="18"></textarea>
+          <textarea *ngIf="!IsWithAdvance" disabled name="textarea" class="form-control" formControlName="Justification" maxlength="100" name="Justification" rows="3" cols="18"></textarea>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

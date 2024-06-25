@@ -1,0 +1,7 @@
+<label class="switchs">
+    <input #inp type="checkbox" id="togBtn" (change)="onChange($event.target.checked)" (blur)="onTouched()">
+    <div class="slider round">
+      <span class="on">ON</span>
+      <span class="off">OFF</span>
+    </div>
+  </label>

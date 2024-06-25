@@ -1,0 +1,187 @@
+<div class="modal-header" id="userProfileModal">
+  <h4 class="modal-title" id="modal-basic-title">User Profile</h4>
+  <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="container-fluid modal-body">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="columns">
+            <div class="column">
+              <figure class="image is-128x128">
+                <img [src]="imageUrl"  style="height: 200px;width: 200px;border: 1px solid" />
+              </figure>
+            </div>
+            <div class="column is-one-third">
+              <div class="field">
+                <div class="file has-name is-primary is-fullwidth">
+                  <label class="file-label">
+                    <input style="background-color: #556ee6;color: #fff;" class="file-input" type="file" name="file" #fileInput
+                    accept="image/x-png,image/jpeg" (change)="onPicChange(fileInput.files[0])" />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <ul class="list-inline mb-0">
+                <li class="next list-inline-item float-end">
+                  <button class="btn btn-primary" (click)="updateProfilePic()" >Upload</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <hr>
+          <aw-wizard [navBarLayout]="'large-empty-symbols'">
+            <aw-wizard-step stepTitle="User Details" style="height: 200px;">
+              <ng-template awWizardStepSymbol>1</ng-template>
+              
+              <div class="row">
+                <ul class="list-inline wizard mb-0">
+                  <li class="next list-inline-item float-end"><button class="btn btn-primary" [disabled]="!userForm.valid"
+                      awNextStep>{{'Next'|translate}}</button>
+                  </li>
+                </ul>
+              </div>
+              <div class="row mt-3">
+                <div class="col-12">
+                  <form [formGroup]="userForm" class="row">
+                    <div class="col-lg-6">
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'HR ID'|translate}}</label>
+                        <div class="col-lg-6">
+                          <input class="form-control" formControlName="HrId" disabled="true" type="text">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Full Name'|translate}}</label>
+                        <div class="col-lg-6">
+                          <input class="form-control" formControlName="FullName" disabled="true" type="text">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Mobile No'|translate}}</label>
+                        <div class="col-lg-6">
+                          <input class="form-control" formControlName="MobileNo" type="text" disabled="true">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Email'|translate}}</label>
+                        <div class="col-lg-6">
+                          <input class="form-control" formControlName="Email" type="text" disabled="true">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Bill Reviewer'|translate}}</label>
+                        <div class="col-lg-6">
+                          <input disabled class="form-control" name="SupervisorName" formControlName="SupervisorName">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Employee Type'|translate}}</label>
+                        <div class="col-lg-6">
+                          <select class="form-control" disabled="true" name="EmpolyeeTypeId"
+                            formControlName="EmpolyeeTypeId" type="text">
+                            <option *ngFor="let item of initModel?.EmployeeTypeList" [ngValue]="item.Id">{{ item.Name }}
+                            </option>
+                          </select>
+
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Department'|translate}}</label>
+                        <div class="col-lg-6">
+                          <select class="form-control" name="DepartmentId" disabled="true"
+                            formControlName="DepartmentId" type="text">
+                            <option *ngFor="let item of initModel?.DepartmentList" [ngValue]="item.Id">{{ item.Name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Designation'|translate}}</label>
+                        <div class="col-lg-6">
+                          <select class="form-control" name="DesignationId" disabled="true"
+                            formControlName="DesignationId" type="text">
+                            <option *ngFor="let item of initModel?.DesignationList" [ngValue]="item.Id">{{ item.Name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-form-label col-lg-6">{{'Office Location'|translate}}</label>
+                        <div class="col-lg-6">
+                          <select class="form-control" name="OfficeLocationId" disabled="true"
+                            formControlName="OfficeLocationId" type="text">
+                            <option *ngFor="let item of initModel?.OfficeLocationList" [ngValue]="item.Id">{{ item.Name
+                              }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-lg-6">
+                          <input class="form-control" formControlName="Id" type="number" min="0" disabled="true"
+                            hidden="true">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              
+            </aw-wizard-step>
+            <aw-wizard-step stepTitle="Bank Details" style="height: 200px;">
+              <ng-template awWizardStepSymbol>3</ng-template>
+              <ul class="list-inline wizard mb-0">
+                <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>{{'Previous'|translate}}</button>
+                </li>
+              </ul>
+              <div class="row mt-3">
+                <div class="col-12">
+                  <div class="col-12 mb-3">
+                    <div class="table-responsive" style="min-height: 100px;">
+                      <table class="table align-middle table-nowrap mb-0">
+                        <thead class="table-light">
+                          <tr>
+                            <th class="align-middle">{{'Bank Name'|translate}}</th>
+                            <th class="align-middle">{{'Account No'|translate}}</th>
+                            <th class="align-middle">{{'Account Type'|translate}}</th>
+                            <th class="align-middle">{{'Routing No'|translate}}</th>
+                            <th class="align-middle">{{'Condition'|translate}}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of bankAccountList">
+                            <td>{{item.BankName}}</td>
+                            <td>{{item.AccountNo}}</td>
+                            <td>{{item.AccountType}}</td>
+                            <td>{{item.RouterNo}}</td>
+                            <td>{{item.Condition}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </aw-wizard-step>
+          </aw-wizard>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
+</div>

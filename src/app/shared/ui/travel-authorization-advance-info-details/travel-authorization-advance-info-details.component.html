@@ -1,0 +1,231 @@
+<div *ngIf="!IsWithAdvance" class="table-responsive">
+    <table class="table table-bordered align-middle table-nowrap mb-0" [ngStyle]="innerWidth < 1000 ? {'width': '1200px'} : {'width': '100%'}">
+        <thead class="table-light">
+            <tr>
+                <th class="align-middle col-3">{{'Location Details'|translate}}</th>
+                <th class="align-middle col-4">{{'Task Details'|translate}}</th>
+                <th class="align-middle col-3">{{'Date Details'|translate}}</th>
+                <th class="align-middle col-2">{{'Remarks'|translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{'Working District' | translate}}</label>
+                      </div>
+                      <div class="col-6">
+                          <label class="input-group-text bg-lightgray">{{item.WorkingDistrictName | translate}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-6">
+                          <label class="input-group-text bg-lightgray">{{'District Type' | translate}}</label>
+                      </div>
+                      <div class="col-6">
+                          <label class="input-group-text bg-lightgray">{{item.WorkingDistrictType | translate}}</label>
+                      </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{'Task Type' | translate}}</label>
+                      </div>
+                      <div class="col-8">
+                          <label class="input-group-text bg-lightgray">{{item.TaskTypeName | translate}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{'Task Detail' | translate}}</label>
+                      </div>
+                      <div class="col-8">
+                          <label class="input-group-text bg-lightgray">{{item.TaskTypeDetailsName | translate}}</label>
+                      </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{'Start Date' | translate}}</label>
+                      </div>
+                      <div class="col-8">
+                          <label class="input-group-text bg-lightgray">{{item.StartDate|date}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-4">
+                          <label class="input-group-text bg-lightgray">{{'End Date' | translate}}</label>
+                      </div>
+                      <div class="col-8">
+                          <label class="input-group-text bg-lightgray">{{item.EndDate|date}}</label>
+                      </div>
+                  </div>
+                </td>
+                <td>
+                  <textarea name="textarea" class="form-control" maxlength="100" name="Remarks" rows="5" cols="18" readonly>{{item.Remarks}}</textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+  <div *ngIf="IsWithAdvance" class="table-responsive">
+    <table class="table table-bordered align-middle table-nowrap mb-0" [ngStyle]="innerWidth < 1000 ? {'width': '1200px'} : {'width': '100%'}">
+        <thead class="table-light">
+            <tr>
+              <th class="align-middle col-3">{{'Location Details'|translate}}</th>
+              <th class="align-middle col-4">{{'Task Details'|translate}}</th>
+              <th class="align-middle col-3">{{'Allowance Details'|translate}}</th>
+              <th class="align-middle col-2">{{'Remarks'|translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+              <td>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Working District' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.WorkingDistrictName | translate}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'District Type' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.WorkingDistrictType | translate}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Allowance per day' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.AllowancecPerDay}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Location From' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.LocationFromDistrictName | translate}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Location To' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.LocationToDistrictName | translate}}</label>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-3">
+                          <label class="input-group-text bg-lightgray">{{'Task Type' | translate}}</label>
+                      </div>
+                      <div class="col-9">
+                          <label class="input-group-text bg-lightgray">{{item.TaskTypeName | translate}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-3">
+                          <label class="input-group-text bg-lightgray">{{'Task Detail' | translate}}</label>
+                      </div>
+                      <div class="col-9">
+                          <label class="input-group-text bg-lightgray">{{item.TaskTypeDetailsName | translate}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-3">
+                          <label class="input-group-text bg-lightgray">{{'Start Date' | translate}}</label>
+                      </div>
+                      <div class="col-9">
+                          <label class="input-group-text bg-lightgray">{{item.StartDate|date}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-3">
+                          <label class="input-group-text bg-lightgray">{{'End Date' | translate}}</label>
+                      </div>
+                      <div class="col-9">
+                          <label class="input-group-text bg-lightgray">{{item.EndDate|date}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-3">
+                          <label class="input-group-text bg-lightgray">{{'No Of Day' | translate}}</label>
+                      </div>
+                      <div class="col-9">
+                          <label class="input-group-text bg-lightgray">{{item.NoOfDays}}</label>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Total Daily Allowance' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.TotalDailyAllowance}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Travel Allowance' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.TravelAllowance ?? 0}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Entertainment' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.EntertainmentAllowance ?? 0}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Miscellaneous' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.MiscellaneousAllowance ?? 0}}</label>
+                      </div>
+                  </div>
+                  <div class="input-group mb-1">
+                      <div class="input-group-prepend col-7">
+                          <label class="input-group-text bg-lightgray">{{'Total' | translate}}</label>
+                      </div>
+                      <div class="col-5">
+                          <label class="input-group-text bg-lightgray">{{item.Total}}</label>
+                      </div>
+                  </div>
+              </td>
+              <td>
+                <textarea name="textarea" class="form-control" maxlength="100" name="Remarks" rows="10" cols="18" readonly>{{item.Remarks}}</textarea>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="background-color: #fff;"></td>
+              <td>
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray">{{'Total Allowance' | translate}}</label>
+                  </div>
+                  <div class="input-group-prepend col-6">
+                    <label class="input-group-text bg-lightgray">{{totalExpense}}</label>
+                  </div>
+                  </div>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>

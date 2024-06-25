@@ -1,0 +1,163 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{labelListTitle}}</h4>
+    <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row" style="background-color: #FCFCFC;" [formGroup]="tAdAForm">
+      <div class="card card-minHeight h-60">
+        <div class="card-body">
+          <div class="row mb-3">
+              <label class="col-form-label col-lg-3">{{'Designation'|translate}}<span class="required-sign">*</span></label>
+              <div class="col-lg-4">
+                <ng-select [items]="tAdAInitModel?.DesignationList" bindLabel="Name" bindValue="Id"
+                  placeholder="{{'Please Select' | translate}}" name="DesignationId" formControlName="DesignationId">
+                  <ng-template ng-option-tmp let-item="item">
+                    {{item.Name | translate}}
+                  </ng-template>
+                </ng-select>
+                <error-handler controlName="DesignationId" displayName="Designation"></error-handler>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Major Area Allowance</h4>
+          <div class="row col-xl-12">
+            <div class="col-xl-6">
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Breakfast<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input type="number" (change)="onAmountChanges()" formControlName="BreakfastMajor" class="form-control" min="0" />
+                      <error-handler controlName="BreakfastMajor" displayName="Breakfast"></error-handler>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Lunch<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input type="number" (change)="onAmountChanges()" formControlName="LunchMajor" class="form-control" min="0" />
+                      <error-handler controlName="LunchMajor" displayName="Lunch"></error-handler>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Snacks<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input type="number" (change)="onAmountChanges()" formControlName="SnacksMajor" class="form-control" min="0" />
+                      <error-handler controlName="SnacksMajor" displayName="Snacks"></error-handler>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Dinner<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input type="number" (change)="onAmountChanges()" formControlName="DinnerMajor" min="0" class="form-control" />
+                      <error-handler controlName="DinnerMajor" displayName="Dinner"></error-handler>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Total Food<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input disabled type="number" (change)="onAmountChanges()" formControlName="TotalFoodMajor" min="0" class="form-control" />
+                  <error-handler controlName="TotalFoodMajor" displayName="Total Food"></error-handler>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Hotel<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input type="number" (change)="onAmountChanges()" formControlName="HotelMajor" min="0" class="form-control" />
+                  <error-handler controlName="HotelMajor" displayName="Hotel"></error-handler>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Local TransPort<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input type="number" (change)="onAmountChanges()" formControlName="LocalTransPortMajor" min="0" class="form-control" />
+                  <error-handler controlName="LocalTransPortMajor" displayName="Local TransPort"></error-handler>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Total Allownace<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input disabled type="number" (change)="onAmountChanges()" formControlName="TotalAllownaceMajor" min="0" class="form-control" />
+                  <error-handler controlName="TotalAllownaceMajor" displayName="Total Allownace"></error-handler>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Minor Area Allowance</h4>
+          <div class="row col-xl-12">
+            <div class="col-xl-6">
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Breakfast<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input disabled type="number" (change)="onAmountChanges()" formControlName="BreakfastMinor" min="0" class="form-control" />
+                      <error-handler controlName="BreakfastMinor" displayName="Breakfast"></error-handler>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Lunch<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input disabled type="number" (change)="onAmountChanges()" formControlName="LunchMinor" min="0" class="form-control" />
+                      <error-handler controlName="LunchMinor" displayName="Lunch"></error-handler>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Snacks<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input disabled type="number" (change)="onAmountChanges()" formControlName="SnacksMinor" min="0" class="form-control" />
+                      <error-handler controlName="SnacksMinor" displayName="Snacks"></error-handler>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-form-label col-lg-6">Dinner<span class="required-sign">*</span></label>
+                    <div class="col-lg-6 d-flex">
+                      <input disabled type="number" (change)="onAmountChanges()" formControlName="DinnerMinor" min="0" class="form-control" />
+                      <error-handler controlName="DinnerMinor" displayName="Dinner"></error-handler>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Total Food<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input disabled type="number" (change)="onAmountChanges()" formControlName="TotalFoodMinor" min="0" class="form-control" />
+                  <error-handler controlName="TotalFoodMinor" displayName="Total Food"></error-handler>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Hotel<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input type="number" (change)="onAmountChanges()" formControlName="HotelMinor" min="0" class="form-control" />
+                  <error-handler controlName="HotelMinor" displayName="Hotel"></error-handler>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Local TransPort<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input type="number" (change)="onAmountChanges()" formControlName="LocalTransPortMinor" min="0" class="form-control" />
+                  <error-handler controlName="LocalTransPortMinor" displayName="Local TransPort"></error-handler>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-form-label col-lg-6">Total Allownace<span class="required-sign">*</span></label>
+                <div class="col-lg-6 d-flex">
+                  <input disabled type="number" (change)="onAmountChanges()" formControlName="TotalAllownaceMinor" min="0" class="form-control" />
+                  <error-handler controlName="TotalAllownaceMinor" displayName="Total Allownace"></error-handler>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onSubmit()" type="submit" class="btn btn-primary">{{'Submit'|translate}}</button>
+  </div>

@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{labelListTitle}}</h4>
+  <button type="button" class="close CloseModal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form class="row" [formGroup]="approverSubGroupUserForm">
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-3">Department</label>
+      <div class="col-lg-9">
+        <ng-select [items]="departmentList" bindLabel="Name" bindValue="Id" (change)="selectSubGroup()"
+          placeholder="{{'Please Select'|translate}}" name="DepartmentId" formControlName="DepartmentId">
+        </ng-select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-3">Approver Sub-Group Name</label>
+      <div class="col-lg-9">
+        <ng-select [items]="approverSubGroupList" bindLabel="Name" bindValue="Id"
+          placeholder="{{'Choose Approver Sub-Group'|translate}}" name="ApproverSubGroupId" formControlName="ApproverSubGroupId">
+        </ng-select>
+        <error-handler controlName="ApproverSubGroupId" displayName="Approver Sub-Group"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-3">Users</label>
+      <div class="col-lg-9">
+        <ng-select [items]="approveruserModel" bindLabel="FullName" bindValue="Id"
+          placeholder="{{'Select User'|translate}}"
+          [searchFn]="customSearchFn" name="UserId" formControlName="UserId">
+          <ng-template ng-option-tmp let-item="item">
+            {{item.FullName + '/' + item.DesignationName + '/' + item.DepartmentName}}
+          </ng-template>
+        </ng-select>
+        <error-handler controlName="UserId" displayName="User"></error-handler>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label class="col-form-label col-lg-3">{{'Status'|translate}}</label>
+      <div class="col-lg-9 d-flex">
+        <app-slide formControlName="IsActive"></app-slide>
+      </div>
+    </div>
+  </form>
+  <app-loader-custom [loading]="loading"></app-loader-custom>
+</div>
+<div class="modal-footer">
+  <button (click)="onSubmit()" type="submit" class="btn btn-primary">{{'Submit'|translate}}</button>
+</div>

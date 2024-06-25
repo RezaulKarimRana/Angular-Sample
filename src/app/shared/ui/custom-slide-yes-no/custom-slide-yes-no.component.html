@@ -1,0 +1,7 @@
+<label class="switchs">
+    <input #inp type="checkbox" id="togBtn" (change)="onChange($event.target.checked)" (blur)="onTouched()">
+    <div class="slider round">
+      <span class="on">{{'YES'|translate}}</span>
+      <span class="off">{{'NO'|translate}}</span>
+    </div>
+  </label>

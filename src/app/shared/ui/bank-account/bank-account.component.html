@@ -1,0 +1,71 @@
+<div style="margin-right: 5px;">
+  <div class="card h-60" style="width: 100%;">
+    <div class="card-body" style="padding: 7px;text-align: center;">
+      <label class="accordionBankInfo" style="font-weight: 600; text-transform: uppercase;">{{'Bank Information'|translate}}</label>
+      <div class="panelBankInfo">
+        <form [formGroup]="bankAccountForm" class="row">
+          <div data-repeater-list="outer-group" class="outer">
+            <div data-repeater-item class="outer">
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Employee Name'|translate}}</label>
+                </div>
+                <input id="AccountHolderName" disabled name="AccountHolderName" formControlName="AccountHolderName"
+                  type="text" class="form-control">
+              </div>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Company'|translate}}</label>
+                </div>
+                <input id="AccountHolderCompany" disabled name="AccountHolderCompany"
+                  formControlName="AccountHolderCompany" type="text" class="form-control">
+              </div>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Mobile No'|translate}}</label>
+                </div>
+                <input id="MobileNo" disabled formControlName="MobileNo" name="MobileNo" type="text"
+                  class="form-control">
+              </div>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Bank Name'|translate}}</label>
+                </div>
+                <input id="BankName" disabled name="BankName" formControlName="BankName" type="text"
+                  class="form-control">
+              </div>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Account No'|translate}}</label>
+                </div>
+                <input id="AccountNo" disabled formControlName="AccountNo" name="AccountNo" type="text"
+                  class="form-control">
+              </div>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Account Type'|translate}}</label>
+                </div>
+                <input id="AccountType" disabled formControlName="AccountType" name="AccountType" type="text"
+                  class="form-control">
+              </div>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Routing No'|translate}}</label>
+                </div>
+                <input id="RouterNo" disabled formControlName="RouterNo" name="RouterNo" type="text"
+                  class="form-control">
+              </div>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <label class="input-group-text bg-white">{{'Condition'|translate}}</label>
+                </div>
+                <input id="Condition" disabled formControlName="Condition" name="Condition" type="text"
+                  class="form-control">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

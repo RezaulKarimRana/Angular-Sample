@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <app-page-title title="{{labelListTitle}}"> </app-page-title>
+      <div class="row">
+        <div class="row">
+          <div style="margin-left: 20px;" class="col card">
+            <div class="card-body">
+              
+              <div class="row">
+                <div class="w-100 col">
+                  <button class="btn btn-primary w-15 float-right mb-2" (click)="openModalItem(null)"> Add New</button>
+                  <table id="advanceMatrixTable" class="table table-responsive table-bordered table-lg mb-0 f-ss-14px">
+                    <thead>
+                      <tr class="tableHeader">
+                        <th scope="col-5" class="table-header-color text-align-center">Name</th>
+                        <th scope="col-5" class="table-header-color text-align-center">WorkFlow</th>
+                        <th scope="col-5" class="table-header-color text-align-center">Acknowledger</th>
+                        <th scope="col-5" class="table-header-color text-align-center">Verifier</th>
+                        <th scope="col-5" class="table-header-color text-align-center">Recommender</th>
+                        <th scope="col-5" class="table-header-color text-align-center">STL Checker</th>
+                        <th scope="col-5" class="table-header-color text-align-center">Approver</th>
+                        <th scope="col-5" class="table-header-color text-align-left">Verifier HR</th>
+                        <th scope="col-5" class="table-header-color text-align-left">Finance Cheque</th>
+                        <th scope="col-5" class="table-header-color text-align-left">Finance Complete</th>
+                        <th scope="col-5" class="table-header-color text-align-left">Internal Control</th>
+                        <th scope="col-1" class="table-header-color text-align-center">{{'Status'|translate}}</th>
+                        <th scope="col-1" class="table-header-color text-align-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of listData">
+                        <td class="text-align-center">{{item.Name}}</td>
+                        <td class="text-align-center">{{item.WorkFlowName}}</td>
+                        <td class="text-align-center">{{item.AcknowledgerGroupName}}</td>
+                        <td class="text-align-center">{{item.VerifierGroupName}}</td>
+                        <td class="text-align-center">{{item.RecommanderGroupName}}</td>
+                        <td class="text-align-center">{{item.STLCheckerName}}</td>
+                        <td class="text-align-center">{{item.ApproverName}}</td>
+                        <td class="text-align-center">{{item.VerifierHRGroupName}}</td>
+                        <td class="text-align-center">{{item.FinanceCheckGroupName}}</td>
+                        <td class="text-align-center">{{item.FinanceCompleteGroupName}}</td>
+                        <td class="text-align-center">{{item.InternalControlGroupName}}</td>
+                        <td class="text-align-center">
+                          <span class="text-success" *ngIf="item.IsActive">Active</span>
+                          <span class="text-danger" *ngIf="!item.IsActive">InActive</span>
+                        </td>
+                        <td class="text-align-left">
+                          <span class="item-link" (click)="openModalItem(item)" data-toggle="tooltip" title="Edit">
+                            <i _ngcontent-lvp-c150="" class="mdi mdi-grease-pencil d-block font-size-12"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
